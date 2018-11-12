@@ -3,7 +3,7 @@ var bodyParser = require("body-parser");
 var session = require("express-session");
 var cookieParser = require("cookie-parser");
 var cors = require("cors");
-var path = require("path");
+// var path = require("path");
 
 var morgan = require("morgan");
 
@@ -14,6 +14,10 @@ var mongo = require("mongodb");
 
 var app = express();
 app.set("view engine", "ejs");
+
+//Import the established routes
+const signupRoutes = require('./routes/signup')
+const signinRoutes = require('./routes/signin')
 
 //use cors to allow cross origin resource sharing
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
@@ -48,7 +52,12 @@ app.use(function(req, res, next) {
   next();
 });
 
+/****************************Code****************************************** */
+
+app.post('/signup', signupRoutes)
+app.post('/signin', signinRoutes)
+
+
+
 app.listen(3001);
 console.log("Server Listening on port 3001");
-
-
