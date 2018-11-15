@@ -10,11 +10,7 @@ import { Panel, Form, FormGroup, FormControl, Button } from 'react-bootstrap';
 import Background from 'assets/img/background1.jpg';
 
 const divStyle = {
-  width: '100%',
-  height: '100%',
-  backgroundImage: `url(${Background})`,
-  display: 'flex',
-  justifyContent: 'center'
+
 };
 
 const opacityLayer = {
@@ -35,11 +31,8 @@ const headingTitle = {
 
 const panelStyle = {
   backgroundColor: 'rgba(255,255,255,0.35)',
-  border: 10,
   padding: 25,
   width: 350,
-  margin: 'auto',
-  marginTop: 100,
 };
 
 const buttonStyle = {

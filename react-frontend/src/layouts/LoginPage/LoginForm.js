@@ -9,16 +9,15 @@ import { Panel, Form, FormGroup, FormControl, Button } from 'react-bootstrap';
 //import Register from './Register';
 
 const divStyle = {
-  alignItems: 'center',
-  marginTop: 100
 };
 
 const headingTitle = {
   fontSize: '25px',
-  color: 'white',
+  color: 'black',
   fontWeight:'bold',
   fontFamily:'Roboto',
-  
+  display: 'flex',
+  justifyContent: 'center'
 };
 
 const panelStyle = {
@@ -77,9 +76,8 @@ class LoginForm extends React.Component {
   render() {
     return (
       <div style={divStyle}>
-        <p style={headingTitle}> Get started with inline style </p>
-
         <Panel style={panelStyle}>
+          <h1 style={headingTitle}> User Login </h1>
           <Form horizontal className="LoginForm" id="loginForm">
             <FormGroup controlId="formEmail">
               <FormControl type="email" placeholder="Email Address" />
