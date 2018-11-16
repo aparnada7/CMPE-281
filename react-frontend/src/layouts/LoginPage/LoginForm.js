@@ -1,7 +1,7 @@
       
       
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom'
+import { BrowserRouter as Router,Route,Link,Switch,Redirect } from 'react-router-dom'
 //import { withRouter } from 'react-router-dom';
 import Dashboard from "layouts/Dashboard/Dashboard.jsx";
 import dashboardRoutes from "routes/dashboard.jsx";
@@ -13,7 +13,7 @@ const divStyle = {
 
 const headingTitle = {
   fontSize: '25px',
-  color: 'black',
+  color: 'white',
   fontWeight:'bold',
   fontFamily:'Roboto',
   display: 'flex',
@@ -30,7 +30,8 @@ const panelStyle = {
 };
 
 const buttonStyle = {
-  marginTop:30,
+  padding:5,
+  marginTop:20,
   display: 'flex',
   justifyContent: 'center'
 };
@@ -93,7 +94,7 @@ class LoginForm extends React.Component {
         <option value="other">User</option>
       </FormControl>
             <FormGroup style={buttonStyle} controlId="formSubmit">
-              <Button style={{ marginRight: 20},{marginLeft:20}} bsStyle="primary" type="submit" onClick={this.handleFormSubmit}>
+              <Button style={{marginLeft:20}} bsStyle="primary" type="submit" onClick={this.handleFormSubmit}>
                 Login
               </Button>
               <Button style={{ marginLeft: 30}}bsStyle="primary" type="submit" onClick={this.setRedirect}>
