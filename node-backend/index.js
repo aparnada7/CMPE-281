@@ -18,6 +18,10 @@ app.set("view engine", "ejs");
 //Import the established routes
 const signupRoutes = require('./routes/signup')
 const signinRoutes = require('./routes/signin')
+const createCluster = require('./routes/createcluster')
+
+
+
 
 //use cors to allow cross origin resource sharing
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
@@ -56,7 +60,7 @@ app.use(function(req, res, next) {
 
 app.post('/signup', signupRoutes)
 app.post('/signin', signinRoutes)
-
+app.post('/createcluster', createCluster)
 
 
 app.listen(3001);

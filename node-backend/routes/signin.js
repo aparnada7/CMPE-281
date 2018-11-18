@@ -7,6 +7,7 @@ var pool = require('../db/pool')
 router.post('/signin',function(req,res){
     
     console.log("Inside Login Post Request");
+    console.log(req.body);
         var username = req.body.username;
         var password = req.body.password;
         var sql = "SELECT *  FROM user WHERE username = " + 
@@ -24,14 +25,24 @@ router.post('/signin',function(req,res){
                     res.writeHead(400,{
                         'Content-Type' : 'text/plain'
                     })
-                    res.end("Invalid Credentials");
+                    res.end("Could not process query.");
                 }else{
+                    if(result.length === 0){
+                        console.log('Invalid credentials.');
+                        res.writeHead(400, {
+                            "Content-Type": "text/plain"
+                                            });
+                        res.end("Invalid credentials");
+                    }
+                    else{
                     res.cookie('cookie',"admin",{maxAge: 900000, httpOnly: false, path : '/'});
                     req.session.user = result;
                         res.writeHead(200,{
                             'Content-Type' : 'text/plain'
                         })
                         res.end("Successful Login");
+                        console.log("Successful Login");
+                    }
                 }
             });
         }

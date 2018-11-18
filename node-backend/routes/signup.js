@@ -6,16 +6,20 @@ var pool = require('../db/pool')
 
 router.post("/signup", function(req, res) {
   console.log("Inside New user creation Request");
+  console.log(req.body);
   var username = req.body.username;
   var email = req.body.email;
-  var password = req.body.email;
+  var password = req.body.password;
+  var usertype = req.body.usertype;
   var sql =
-    "INSERT INTO user(username, email, password) VALUES(" +
+    "INSERT INTO user(username, email, password, userTypeID_fk) VALUES(" +
     mysql.escape(username) +
     ", " +
     mysql.escape(email) +
     ", " +
     mysql.escape(password) +
+    ", " +
+    mysql.escape(usertype) +
     ");";
 
   pool.getConnection(function(err, con) {
@@ -33,7 +37,7 @@ router.post("/signup", function(req, res) {
           });
           res.end("Could not create new user");
         } else {
-          res.cookie("cookie", "user1", {
+          res.cookie("cookie", "user", {
             maxAge: 900000,
             httpOnly: false,
             path: "/"
