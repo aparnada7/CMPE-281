@@ -1,52 +1,54 @@
-      
-      
-import React, { Component } from 'react';
-import { BrowserRouter as Router,Route,Link,Switch,Redirect } from 'react-router-dom'
+import React, { Component } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch,
+  Redirect
+} from "react-router-dom";
 //import { withRouter } from 'react-router-dom';
 import Dashboard from "layouts/Dashboard/Dashboard.jsx";
 import dashboardRoutes from "routes/dashboard.jsx";
-import { Panel, Form, FormGroup, FormControl, Button } from 'react-bootstrap';
+import { Panel, Form, FormGroup, FormControl, Button } from "react-bootstrap";
 //import Register from './Register';
 
-const divStyle = {
-};
+const divStyle = {};
 
 const headingTitle = {
-  fontSize: '25px',
-  color: 'white',
-  fontWeight:'bold',
-  fontFamily:'Roboto',
-  display: 'flex',
-  justifyContent: 'center'
+  fontSize: "25px",
+  color: "white",
+  fontWeight: "bold",
+  fontFamily: "Roboto",
+  display: "flex",
+  justifyContent: "center"
 };
 
 const panelStyle = {
-  backgroundColor: 'rgba(255,255,255,0.35)',
+  backgroundColor: "rgba(255,255,255,0.35)",
   border: 10,
   padding: 20,
   // paddingLeft: 20,
   // paddingRight: 20,
-  width: 300,
+  width: 300
 };
 
 const buttonStyle = {
-  padding:5,
-  marginTop:20,
-  display: 'flex',
-  justifyContent: 'center'
+  padding: 5,
+  marginTop: 20,
+  display: "flex",
+  justifyContent: "center"
 };
-
 
 class LoginForm extends React.Component {
   constructor() {
-    super()
+    super();
     this.state = {
-    redirect: false
-  }
+      redirect: false
+    };
     this.routeChange = this.routeChange.bind(this);
     this.setRedirect = this.setRedirect.bind(this);
   }
-  routeChange(e){
+  routeChange(e) {
     e.preventDefault();
     console.log("gdhag");
     let path = `/dashboard`;
@@ -59,20 +61,19 @@ class LoginForm extends React.Component {
   setRedirect = () => {
     this.setState({
       redirect: true
-    })
-  }
-  renderRedirect = (e) => {
+    });
+  };
+  renderRedirect = e => {
     e.preventDefault();
     console.log("FORM Register!");
     if (this.state.redirect) {
-      return <Redirect to= '/Dashboard' />
+      return <Redirect to="/Dashboard" />;
     }
-  }
+  };
   handleFormSubmit(e) {
     e.preventDefault();
 
     console.log("FORM SUBMIT!");
-
   }
   handleFormRegister(e) {
     e.preventDefault();
@@ -81,8 +82,7 @@ class LoginForm extends React.Component {
   }
 
   render() {
-    if(this.state.redirect)
-      return <Redirect to= '/Dashboard' />
+    if (this.state.redirect) return <Redirect to="/Dashboard" />;
 
     return (
       <div style={divStyle}>
@@ -97,23 +97,33 @@ class LoginForm extends React.Component {
             </FormGroup>
 
             <FormControl componentClass="select" placeholder="select">
-        <option value="select">Role</option>
-        <option value="other">Client</option>
-        <option value="other">IOT Manager</option>
-        <option value="other">User</option>
-      </FormControl>
+              <option value="select">Role</option>
+              <option value="other">Client</option>
+              <option value="other">IOT Manager</option>
+              <option value="other">User</option>
+            </FormControl>
             <FormGroup style={buttonStyle} controlId="formSubmit">
-              <Button style={{marginLeft:20}} bsStyle="primary" type="submit" onClick={this.handleFormSubmit}>
+              <Button
+                style={{ marginLeft: 20 }}
+                bsStyle="primary"
+                type="submit"
+                onClick={this.handleFormSubmit}
+              >
                 Login
               </Button>
-              <Button style={{ marginLeft: 30}}bsStyle="primary" type="submit" onClick={this.setRedirect}>
+              <Button
+                style={{ marginLeft: 30 }}
+                bsStyle="primary"
+                type="submit"
+                onClick={this.setRedirect}
+              >
                 Register
               </Button>
             </FormGroup>
           </Form>
         </Panel>
       </div>
-    )
+    );
   }
 }
 
