@@ -5,4 +5,3 @@ import Register from 'layouts/Register/RegisterPage';
 const indexRoutes = [{ path: "/", component: LoginPage}];
 
 export default indexRoutes;
-

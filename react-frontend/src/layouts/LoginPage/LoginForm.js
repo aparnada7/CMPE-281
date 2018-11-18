@@ -38,18 +38,24 @@ const buttonStyle = {
 
 
 class LoginForm extends React.Component {
-  constuctor() {
-    this.routeChange = this.routeChange.bind(this);
-  }
-  // routeChange(e){
-  //   e.preventDefault();
-  //   console.log("gdhag");
-  //   let path = `/dashboard`;
-  //   this.props.history.push(path);
-  // }
-  state = {
+  constructor() {
+    super()
+    this.state = {
     redirect: false
   }
+    this.routeChange = this.routeChange.bind(this);
+    this.setRedirect = this.setRedirect.bind(this);
+  }
+  routeChange(e){
+    e.preventDefault();
+    console.log("gdhag");
+    let path = `/dashboard`;
+    this.props.history.push(path);
+  }
+
+  // state = {
+  //   redirect: false
+  // }
   setRedirect = () => {
     this.setState({
       redirect: true
@@ -75,6 +81,9 @@ class LoginForm extends React.Component {
   }
 
   render() {
+    if(this.state.redirect)
+      return <Redirect to= '/Dashboard' />
+
     return (
       <div style={divStyle}>
         <Panel style={panelStyle}>
