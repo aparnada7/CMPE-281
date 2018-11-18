@@ -60,11 +60,13 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="warning" stats icon>
                 <CardIcon color="warning">
-                  <Icon>content_copy</Icon>
+                  <Icon>wb_cloudy</Icon>
                 </CardIcon>
-                <p className={classes.cardCategory}>Cluster Details</p>
+                <p className={classes.cardCategory}>Cluster Stats</p>
                 <h3 className={classes.cardTitle}>
-                  49/50 <small>GB</small>
+                  5 <small> active</small>
+                  <h3 className={classes.cardCategory}> within 4 zones in the USA</h3>
+                  <h3 className={classes.cardCategory}> east, west, north and south</h3>
                 </h3>
               </CardHeader>
               <CardFooter stats>
@@ -73,7 +75,7 @@ class Dashboard extends React.Component {
                     <Warning />
                   </Danger>
                   <a href="#pablo" onClick={e => e.preventDefault()}>
-                    Get more clusters
+                    Requesting more clusters
                   </a>
                 </div>
               </CardFooter>
@@ -83,30 +85,31 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="success" stats icon>
                 <CardIcon color="success">
-                  <Store />
+                  <Icon>local_atm</Icon>
                 </CardIcon>
-                <p className={classes.cardCategory}>Nodes in My Smart City</p>
-                <h3 className={classes.cardTitle}>$34,245</h3>
+                <p className={classes.cardCategory}><b>Billing Details</b> From:11/20/18   To:10/20/18</p>
+                <h3 className={classes.cardTitle}>$245</h3>
+                <p className={classes.cardCategory}>Due on: 12/05/18</p>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
                   <DateRange />
-                  Last 24 Hours
+                  Last 30 days
                 </div>
               </CardFooter>
             </Card>
           </GridItem>
           <GridItem xs={12} sm={6} md={3}>
             <Card>
-              <CardHeader color="danger" stats icon>
-                <CardIcon color="danger">
-                  <Icon>info_outline</Icon>
+              <CardHeader color="info" stats icon>
+                <CardIcon color="info">
+                  <Icon>wb_incandescent</Icon>
                 </CardIcon>
-                <p className={classes.cardTitle}>Sensor Types</p>
-                <h3 className={classes.cardCategory}>Motion : 175</h3>
-                <h3 className={classes.cardCategory}>Temperature : 185</h3>
-                <h3 className={classes.cardCategory}>Humidity : 195</h3>
-                <h3 className={classes.cardCategory}>Motion : 205</h3>
+                <p className={classes.cardTitle}>Sensors</p>
+                <h3 className={classes.cardCategory}>Motion : 25</h3>
+                <h3 className={classes.cardCategory}>Temperature : 18</h3>
+                <h3 className={classes.cardCategory}>Humidity : 19</h3>
+                <h3 className={classes.cardCategory}>Luminosity : 22</h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
@@ -118,12 +121,13 @@ class Dashboard extends React.Component {
           </GridItem>
           <GridItem xs={12} sm={6} md={3}>
             <Card>
-              <CardHeader color="info" stats icon>
-                <CardIcon color="info">
+              <CardHeader color="primary" stats icon>
+                <CardIcon color="primary">
                   <Accessibility />
                 </CardIcon>
-                <p className={classes.cardCategory}>Current Users</p>
-                <h3 className={classes.cardTitle}>+245</h3>
+                <p className={classes.cardCategory}><b>Current Users</b> My Smart City</p>
+                <h3 className={classes.cardTitle}>+27</h3>
+                <h3 className={classes.cardCategory}>California, USA</h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
@@ -157,7 +161,7 @@ class Dashboard extends React.Component {
               </CardBody>
               <CardFooter chart>
                 <div className={classes.stats}>
-                  <AccessTime /> updated 4 minutes ago
+                  <AccessTime /> updated a week ago
                 </div>
               </CardFooter>
             </Card>
@@ -175,14 +179,14 @@ class Dashboard extends React.Component {
                 />
               </CardHeader>
               <CardBody>
-                <h4 className={classes.cardTitle}>Node statistics -added/removed nodes</h4>
+                <h4 className={classes.cardTitle}>Node statistics</h4>
                 <p className={classes.cardCategory}>
-                  Last Year Performance
+                  Current nodes in total
                 </p>
               </CardBody>
               <CardFooter chart>
                 <div className={classes.stats}>
-                  <AccessTime /> campaign sent 2 days ago
+                  <AccessTime /> Updated 24 hours ago
                 </div>
               </CardFooter>
             </Card>
@@ -199,14 +203,14 @@ class Dashboard extends React.Component {
                 />
               </CardHeader>
               <CardBody>
-                <h4 className={classes.cardTitle}>Sensor Heartbeat  Activity Profile</h4>
+                <h4 className={classes.cardTitle}>Sensor Heartbeat Activity Profile</h4>
                 <p className={classes.cardCategory}>
-                  Last Campaign Performance
+                  Sensor heartbeats recorded every 30 mins database
                 </p>
               </CardBody>
               <CardFooter chart>
                 <div className={classes.stats}>
-                  <AccessTime/> updated 20 mins ago
+                  <AccessTime/> updated every 30 minutes
                 </div>
               </CardFooter>
             </Card>
