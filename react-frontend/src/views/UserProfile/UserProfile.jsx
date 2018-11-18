@@ -42,15 +42,107 @@ function UserProfile(props) {
         <GridItem xs={12} sm={12} md={8}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Edit Profile</h4>
-              <p className={classes.cardCategoryWhite}>Complete your profile</p>
+              <h4 className={classes.cardTitleWhite}>My Smart City User Profile</h4>
             </CardHeader>
             <CardBody>
+            <GridContainer>
+              <GridItem xs={12} sm={12} md={12}>
+
+                <h4 className={classes.cardTitle}>Admin User</h4>
+                <CustomInput
+                  labelText="My Smart City's cloud admin user is allowed to add/update/delete sensors/nodes/clusters."
+                  id="about-me"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                  inputProps={{
+                    multiline: true,
+                    rows: 2
+                  }}
+                />
+              </GridItem>
+            </GridContainer>
+
               <GridContainer>
                 <GridItem xs={12} sm={12} md={5}>
+
+                {
+                  // <CustomInput
+                  //   labelText="Admin User"
+                  //   id="company-disabled"
+                  //   formControlProps={{
+                  //     fullWidth: true
+                  //   }}
+                  //   inputProps={{
+                  //     disabled: true
+                  //   }}
+                  // />
+                }
+                </GridItem>
+                {
+                // <GridItem xs={12} sm={12} md={3}>
+                //   <CustomInput
+                //     labelText="Username"
+                //     id="username"
+                //     formControlProps={{
+                //       fullWidth: true
+                //     }}
+                //   />
+                // </GridItem>
+                // <GridItem xs={12} sm={12} md={4}>
+                //   <CustomInput
+                //     labelText="Email address"
+                //     id="email-address"
+                //     formControlProps={{
+                //       fullWidth: true
+                //     }}
+                //   />
+                // </GridItem>
+              }
+              </GridContainer>
+              <GridContainer>
+                <GridItem xs={12} sm={12} md={6}>
+                <h4 className={classes.cardTitle} id="company-disabled">My-First-Name</h4>
+                {
+                  // <CustomInput
+                  //   labelText="My-First-Name"
+                  //   id="company-disabled"
+                  //   formControlProps={{
+                  //     fullWidth: true
+                  //   }}
+                  //     inputProps={{
+                  //       disabled: true
+                  //     }}
+                  //
+                  // />
+                }
+                </GridItem>
+                <GridItem xs={12} sm={12} md={6}>
+                <h4 className={classes.cardTitle} id="company-disabled">My-Last-Name</h4>
+                  {
+                  //   <CustomInput
+                  //   labelText="My-Last-Name"
+                  //   id="company-disabled"
+                  //   formControlProps={{
+                  //     fullWidth: true
+                  //   }}
+                  //     inputProps={{
+                  //       disabled: true
+                  //     }}
+                  //
+                  // />
+                }
+                </GridItem>
+              </GridContainer>
+              <GridContainer>
+                <GridItem xs={12} sm={12} md={4}>
+                {
+                  // <h4 className={classes.cardTitle} id="company-disabled">San Jose, CA</h4>
+                }
+
                   <CustomInput
-                    labelText="Company (disabled)"
-                    id="company-disabled"
+                    labelText="San Jose"
+                    id="city"
                     formControlProps={{
                       fullWidth: true
                     }}
@@ -58,95 +150,59 @@ function UserProfile(props) {
                       disabled: true
                     }}
                   />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={3}>
-                  <CustomInput
-                    labelText="Username"
-                    id="username"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
+
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
+                {
+                  // <h4 className={classes.cardTitle} id="company-disabled">USA</h4>
+                }
+
                   <CustomInput
-                    labelText="Email address"
-                    id="email-address"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-              </GridContainer>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    labelText="First Name"
-                    id="first-name"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    labelText="Last Name"
-                    id="last-name"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-              </GridContainer>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="City"
-                    id="city"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="Country"
+                    labelText="USA"
                     id="country"
                     formControlProps={{
                       fullWidth: true
                     }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="Postal Code"
-                    id="postal-code"
-                    formControlProps={{
-                      fullWidth: true
+                    inputProps={{
+                      disabled: true
                     }}
                   />
+
                 </GridItem>
+                {
+                // <GridItem xs={12} sm={12} md={4}>
+                //   <CustomInput
+                //     labelText="Postal Code"
+                //     id="postal-code"
+                //     formControlProps={{
+                //       fullWidth: true
+                //     }}
+                //   />
+                // </GridItem>
+              }
               </GridContainer>
               <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <InputLabel style={{ color: "#AAAAAA" }}>About me</InputLabel>
+                <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
-                    labelText="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."
-                    id="about-me"
+                    labelText="Active since:  Nov 18th, 2018"
+                    id="city"
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{
-                      multiline: true,
-                      rows: 5
+                      disabled: true
                     }}
                   />
+
                 </GridItem>
               </GridContainer>
+
             </CardBody>
-            <CardFooter>
-              <Button color="primary">Update Profile</Button>
-            </CardFooter>
+            {
+            // <CardFooter>
+            //   <Button color="primary">Update Profile</Button>
+            // </CardFooter>
+          }
           </Card>
         </GridItem>
         <GridItem xs={12} sm={12} md={4}>
@@ -157,15 +213,13 @@ function UserProfile(props) {
               </a>
             </CardAvatar>
             <CardBody profile>
-              <h6 className={classes.cardCategory}>CEO / CO-FOUNDER</h6>
-              <h4 className={classes.cardTitle}>Alec Thompson</h4>
+              <h6 className={classes.cardCategory}>ADMIN USER</h6>
+              <h4 className={classes.cardTitle}>First-Name Last-Name</h4>
               <p className={classes.description}>
-                Don't be scared of the truth because we need to restart the
-                human foundation in truth And I love you like Kanye loves Kanye
-                I love Rick Owens’ bed design but the back is...
+                My Smart City's cloud admin user is allowed to add/update/delete sensors/nodes/clusters.
               </p>
               <Button color="primary" round>
-                Follow
+                -------
               </Button>
             </CardBody>
           </Card>
