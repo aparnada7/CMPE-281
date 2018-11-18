@@ -216,6 +216,84 @@ class Dashboard extends React.Component {
             </Card>
           </GridItem>
         </GridContainer>
+        {
+          //This is where the new sensor/node/cluster tables/feed comes in
+        }
+
+        <GridContainer>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader color="primary">
+                <h4 className={classes.cardTitleWhite}>Sensor Statistics</h4>
+                <p className={classes.cardCategoryWhite}>
+                  Below are the live sensor statistics from cloud database
+                </p>
+              </CardHeader>
+              <CardBody>
+                <Table
+                  tableHeaderColor="primary"
+                  tableHead={["SensorID", "Sensor Type", "Active Since", "Location", "Status"]}
+                  tableData={[
+                    ["SR045761", "Motion", "11-08-2018 12:22:45", "Niger",  "Active"],
+                    ["SR045762", "Humidity", "11-10-2018 01:22:09", "Curaçao", "Maintenance"],
+                    ["SR045763", "Temperature", "11-11-2018 09:26:00", "Netherlands", "Inactive"],
+                    ["SR045764", "Motion", "11-12-2018 03:56:45", "Korea, South", "Turned-off"],
+                    ["SR045765", "Temperature", "11-14-2018 17:19:30", "Malawi", "Active"]
+                  ]}
+                />
+              </CardBody>
+            </Card>
+          </GridItem>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader color="primary">
+                <h4 className={classes.cardTitleWhite}>Node Statistics</h4>
+                <p className={classes.cardCategoryWhite}>
+                  Below are the live node statistics from cloud database
+                </p>
+              </CardHeader>
+              <CardBody>
+                <Table
+                  tableHeaderColor="primary"
+                  tableHead={["Node ID", "Active Since", "Location", "Current status"]}
+                  tableData={[
+                    ["ND045761", "11-08-2018 12:22:45", "Niger",  "Active"],
+                    ["ND045762", "11-10-2018 01:22:09", "Curaçao", "Active"],
+                    ["ND045763", "11-11-2018 09:26:00", "Netherlands", "Inactive"],
+                    ["ND045764", "11-12-2018 03:56:45", "Korea, South", "Active"],
+                    ["ND045765", "11-14-2018 17:19:30", "Malawi", "Active"]
+                  ]}
+                />
+              </CardBody>
+            </Card>
+          </GridItem>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader color="primary">
+                <h4 className={classes.cardTitleWhite}>Cluster Statistics</h4>
+                <p className={classes.cardCategoryWhite}>
+                  Below are the live cluster statistics from cloud database
+                </p>
+              </CardHeader>
+              <CardBody>
+                <Table
+                  tableHeaderColor="primary"
+                  tableHead={["Cluster ID", "Active Since", "Location", "Current status"]}
+                  tableData={[
+                    ["CL045761", "11-08-2018 12:22:45", "Niger",  "Active"],
+                    ["CL045762", "11-10-2018 01:22:09", "Curaçao", "Active"],
+                    ["CL045763", "11-11-2018 09:26:00", "Netherlands", "Inactive"],
+                    ["CL045764", "11-12-2018 03:56:45", "Korea, South", "Active"],
+                    ["CL045765", "11-14-2018 17:19:30", "Malawi", "Active"]
+                  ]}
+                />
+              </CardBody>
+            </Card>
+          </GridItem>
+        </GridContainer>
+        {
+          //Sensor/Node/Cluster live feed data from DB will end here. Below will be Maintenance and TODOs.
+        }
         <GridContainer>
           <GridItem xs={12} sm={12} md={6}>
             <CustomTabs
