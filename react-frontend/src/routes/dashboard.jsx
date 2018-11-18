@@ -34,30 +34,30 @@ const dashboardRoutes = [
   },
   {
     path: "/table",
-    sidebarName: "Table List",
-    navbarName: "Table List",
-    icon: "content_paste",
+    sidebarName: "Cluster Management",
+    navbarName: "Cluster Management",
+    icon: BubbleChart,
     component: TableList
   },
   {
     path: "/typography",
-    sidebarName: "Typography",
-    navbarName: "Typography",
-    icon: LibraryBooks,
+    sidebarName: "Node Management",
+    navbarName: "Node Management",
+    icon: "wb_cloudy",
     component: Typography
   },
   {
     path: "/icons",
-    sidebarName: "Icons",
-    navbarName: "Icons",
-    icon: BubbleChart,
+    sidebarName: "Sensor Management",
+    navbarName: "Sensor Management",
+    icon: "wb_incandescent",
     component: Icons
   },
   {
     path: "/maps",
-    sidebarName: "Maps",
-    navbarName: "Map",
-    icon: LocationOn,
+    sidebarName: "View Reports",
+    navbarName: "View Reports",
+    icon: LibraryBooks,
     component: Maps
   },
   {
@@ -69,9 +69,9 @@ const dashboardRoutes = [
   },
   {
     path: "/upgrade-to-pro",
-    sidebarName: "Upgrade To PRO",
-    navbarName: "Upgrade To PRO",
-    icon: Unarchive,
+    sidebarName: "LOGOUT",
+    navbarName: "LOGOUT",
+    icon: "power_settings_new",
     component: UpgradeToPro
   },
   { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
