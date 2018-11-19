@@ -42,7 +42,9 @@ import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardS
 
 class Dashboard extends React.Component {
   state = {
-    value: 0
+    value: 0,
+    //Data to be fetched from MySQL DB into array below.It will store bothe cluster and node data.
+    clusterNodeData : []
   };
   handleChange = (event, value) => {
     this.setState({ value });
@@ -51,8 +53,28 @@ class Dashboard extends React.Component {
   handleChangeIndex = index => {
     this.setState({ value: index });
   };
+
+  //Call func to retrieve data from API.
+  componentDidMount() {
+    console.log("Component did mount is running....");
+    this.getClusterNodeData();
+    console.log("After data is fetched!!!");
+  }
+  //Need to update this func
+  // renderInfo = ({id_node_master, node_location}) => <div key={id_node_master}>{node_location}</div>
+
+  //Func to fetch data through API call--> Fetches node/sensor details.
+  getClusterNodeData(){
+        fetch('http://localhost:3001/getdashboard')
+        .then(response => response.json())
+        .then(response => this.setState({clusterNodeData : response.data}))
+        .catch(err => console.error(err))
+}
+//Code ends here for DB fetch.
+
   render() {
     const { classes } = this.props;
+    const { clusterNodeData } = this.state;
     return (
       <div>
         <GridContainer>
@@ -359,6 +381,9 @@ class Dashboard extends React.Component {
             </Card>
           </GridItem>
         </GridContainer>
+<!--         <div>
+        Fetch here!!!!
+        </div> -->
       </div>
     );
   }
