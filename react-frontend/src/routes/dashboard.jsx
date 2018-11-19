@@ -17,6 +17,7 @@ import Maps from "views/Maps/Maps.jsx";
 import NotificationsPage from "views/Notifications/Notifications.jsx";
 import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.jsx";
 
+
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -49,7 +50,7 @@ const dashboardRoutes = [
   {
     path: "/icons",
     sidebarName: "Sensor Management",
-    navbarName: "Sensor Management",
+    navbarName: "Sensor Simulation",
     icon: "wb_incandescent",
     component: Icons
   },
