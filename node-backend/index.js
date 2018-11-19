@@ -7,7 +7,8 @@ var cors = require("cors");
 
 var morgan = require("morgan");
 
-var mongoose = require("mongoose");
+var { mongoose } = require("./db/mongoose");
+// var mongoose = require("mongoose");
 mongoose.set("debug", true);
 
 var mongo = require("mongodb");
@@ -19,9 +20,11 @@ app.set("view engine", "ejs");
 const signupRoutes = require('./routes/signup')
 const signinRoutes = require('./routes/signin')
 const createCluster = require('./routes/createcluster')
-
-
-
+const sendData = require('./routes/senddata')
+const getNodeData = require('./routes/getnodedata')
+const getDashboard = require('./routes/getdashboard')
+const terminateNode = require('./routes/terminatenode')
+const startNode = require('./routes/startnode')
 
 //use cors to allow cross origin resource sharing
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
@@ -61,7 +64,11 @@ app.use(function(req, res, next) {
 app.post('/signup', signupRoutes)
 app.post('/signin', signinRoutes)
 app.post('/createcluster', createCluster)
-
+app.post('/senddata', sendData)
+app.post('/getnodedata', getNodeData)
+app.get('/getdashboard', getDashboard)
+app.post('/terminatenode', terminateNode)
+app.post('/startnode', start    Node)
 
 app.listen(3001);
 console.log("Server Listening on port 3001");
