@@ -68,7 +68,7 @@ app.post('/senddata', sendData)
 app.post('/getnodedata', getNodeData)
 app.get('/getdashboard', getDashboard)
 app.post('/terminatenode', terminateNode)
-app.post('/startnode', start    Node)
+app.post('/startnode', startNode)
 
 app.listen(3001);
 console.log("Server Listening on port 3001");
