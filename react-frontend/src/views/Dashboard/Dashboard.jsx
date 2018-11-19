@@ -381,9 +381,6 @@ class Dashboard extends React.Component {
             </Card>
           </GridItem>
         </GridContainer>
-<!--         <div>
-        Fetch here!!!!
-        </div> -->
       </div>
     );
   }
