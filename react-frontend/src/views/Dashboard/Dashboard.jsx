@@ -1,5 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+// import * as API from "../../api/clusternodeapi";
+import * as API from "../../api/api";
+
 // react plugin for creating charts
 import ChartistGraph from "react-chartist";
 // @material-ui/core
@@ -39,6 +42,7 @@ import {
 } from "variables/charts.jsx";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
+  var data = [];
 
 class Dashboard extends React.Component {
   state = {
@@ -55,26 +59,131 @@ class Dashboard extends React.Component {
   };
 
   //Call func to retrieve data from API.
-  componentDidMount() {
-    console.log("Component did mount is running....");
-    this.getClusterNodeData();
-    console.log("After data is fetched!!!");
-  }
+  // componentDidMount() {
+  //   console.log("Component did mount is running....");
+  //   this.getClusterNodeData();
+  //   console.log("After data is fetched!!!");
+  // }
   //Need to update this func
   // renderInfo = ({id_node_master, node_location}) => <div key={id_node_master}>{node_location}</div>
 
   //Func to fetch data through API call--> Fetches node/sensor details.
-  getClusterNodeData(){
-        fetch('http://localhost:3001/getdashboard')
-        .then(response => response.json())
-        .then(response => this.setState({clusterNodeData : response.data}))
-        .catch(err => console.error(err))
-}
+//   getClusterNodeData(){
+//         fetch('http://localhost:3001/getdashboard')
+//         .then(response => response.json())
+//         .then(response => this.setState({clusterNodeData : response.data}))
+//         .catch(err => console.error(err))
+// }
 //Code ends here for DB fetch.
+
+//Code start to fetch using API module
+componentWillMount() {
+  console.log("Running component will mount....")
+
+  API.fetchSensorData()
+      .then((res) => {
+          //console.log("status " +[res]);
+          if (res) {
+              console.log(' Success')
+              this.setState({
+                  isLoggedIn: true,
+                  sensorData: res
+              });
+              data = res;
+              //console.log("state " +data[0].sensor_make);
+              this.props.history.push('/dashboard');
+          } else if (res.status === '401') {
+              console.log("No records");
+              this.setState({
+                  isLoggedIn: true,
+                  message: "No Senosrs found..!!",
+              });
+          } else if (res.status === '402') {
+              this.setState({
+                  isLoggedIn: false,
+                  message: "Session Expired..!!",
+              });
+              this.props.history.push('/login');
+          }
+      });
+
+    // API.fetchClustserNodeData()
+    //     .then((res) => {
+    //         //console.log("status " +[res]);
+    //         if (res) {
+    //             console.log(' Success')
+    //             this.setState({
+    //                 clusterNodeData: res
+    //             });
+    //             data = res;
+    //             //console.log("state " +data[0].sensor_make);
+    //             this.props.history.push('/dashboard');
+    //         } else if (res.status === '401') {
+    //             console.log("No records");
+    //             this.setState({
+    //                 isLoggedIn: true,
+    //                 message: "No cluster or node details found..!!",
+    //             });
+    //         } else if (res.status === '402') {
+    //             this.setState({
+    //                 isLoggedIn: false,
+    //                 message: "Session Expired..!!",
+    //             });
+    //             this.props.history.push('/login');
+    //         }
+    //     });
+}
+//Code end to fetch using API module
 
   render() {
     const { classes } = this.props;
-    const { clusterNodeData } = this.state;
+    var self = this;
+    var i = 0;
+    // var infoDict = this.props.data;
+    console.log('map', data)
+    // console.log('Before for loop')
+    // for (var key in infoDict) {
+    //       // arr.push(dict[key]);
+    //       console.log("Inside.")
+    //       console.log(i, "--> ", infoDict[key])
+    //       i += 1;
+    //   }
+    var clusterdatadict = data['clusterdata'];
+    var nodedataDict = data['nodedata'];
+    var totalclusters = data['totalclusters'];
+    var totalnodes = data['totalnodes'];
+    var activeclusters = data['activeclusters'];
+    var activenodes = data['activenodes'];
+
+    // var cluster1 = clusterdatadict[0]
+    // console.console.log("cluster[0] : ", cluster1);
+
+      console.log('- Cluster data:', clusterdatadict)
+      // console.log(typeof clusterdatadict)
+      // console.log("Lets check this : ", Object.values(clusterdatadict))
+      // console.log('- Cluster data[0]:', clusterdatadict[0])
+      console.log('node data:', nodedataDict)
+      console.log(typeof nodedataDict)
+      console.log('Total clusters:', totalclusters)
+      console.log('Total nodes:', totalnodes)
+      console.log('Active clusters:', activeclusters)
+      console.log('Active nodes:', activenodes)
+      console.log(typeof totalclusters,typeof totalnodes,typeof activeclusters,typeof activenodes)
+
+// SENSOR DATA only
+const sensorData = data.map((function(item){
+    return(
+        <tr key={item.id_sensor_master_pk} onClick={self.handleClick} className="odd ProjectTable-row project-details">
+            {/*changed coloumn names as per mongo db column names*/}
+            <td className='ProjectTable-cell '>{item.id_sensor_master_pk}</td>
+            <td className=' '>{item.sensor_model}</td>
+            <td>{(new Date(item.sensor_add_date)).toLocaleDateString()}</td>
+            <td className='ProjectTable-cell'>{item.sensor_location}</td>
+            <td className='ProjectTable-cell'>{item.status}</td>
+          </tr>
+        )
+}))
+//SENSOR DATA fetched
     return (
       <div>
         <GridContainer>
@@ -251,20 +360,22 @@ class Dashboard extends React.Component {
                   Below are the live sensor statistics from cloud database
                 </p>
               </CardHeader>
-              <CardBody>
-                <Table
-                  tableHeaderColor="primary"
-                  tableHead={["SensorID", "Sensor Type", "Active Since", "Location", "Status"]}
-                  tableData={[
-                    ["SR045761", "Motion", "11-08-2018 12:22:45", "Niger",  "Active"],
-                    ["SR045762", "Humidity", "11-10-2018 01:22:09", "Curaçao", "Maintenance"],
-                    ["SR045763", "Temperature", "11-11-2018 09:26:00", "Netherlands", "Inactive"],
-                    ["SR045764", "Motion", "11-12-2018 03:56:45", "Korea, South", "Turned-off"],
-                    ["SR045765", "Temperature", "11-14-2018 17:19:30", "Malawi", "Active"]
-                  ]}
-                />
-              </CardBody>
-            </Card>
+            <table className='ProjectTable' tableHeaderColor="primary">
+                <thead className='ProjectTable-head'>
+                <tr>
+                    <th className='ProjectTable-header'>Sensor ID</th>
+                    <th className='ProjectTable-header'>Sensor Type</th>
+                    <th className='ProjectTable-header'>Active Since</th>
+                    <th className='ProjectTable-header'>Location</th>
+                    <th className='ProjectTable-header'>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                {/*{nameslist}*/}
+                {sensorData}
+                </tbody>
+            </table>
+              </Card>
           </GridItem>
           <GridItem xs={12} sm={12} md={12}>
             <Card>
@@ -274,19 +385,20 @@ class Dashboard extends React.Component {
                   Below are the live node statistics from cloud database
                 </p>
               </CardHeader>
-              <CardBody>
-                <Table
-                  tableHeaderColor="primary"
-                  tableHead={["Node ID", "Active Since", "Location", "Current status"]}
-                  tableData={[
-                    ["ND045761", "11-08-2018 12:22:45", "Niger",  "Active"],
-                    ["ND045762", "11-10-2018 01:22:09", "Curaçao", "Active"],
-                    ["ND045763", "11-11-2018 09:26:00", "Netherlands", "Inactive"],
-                    ["ND045764", "11-12-2018 03:56:45", "Korea, South", "Active"],
-                    ["ND045765", "11-14-2018 17:19:30", "Malawi", "Active"]
-                  ]}
-                />
-              </CardBody>
+              <table className='ProjectTable' tableHeaderColor="primary">
+                  <thead className='ProjectTable-head'>
+                  <tr>
+                      <th className='ProjectTable-header'>Node ID</th>
+                      <th className='ProjectTable-header'>Active Since</th>
+                      <th className='ProjectTable-header'>Location</th>
+                      <th className='ProjectTable-header'>Status</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {/*{nameslist}*/}
+                  {sensorData}
+                  </tbody>
+              </table>
             </Card>
           </GridItem>
           <GridItem xs={12} sm={12} md={12}>
@@ -297,19 +409,20 @@ class Dashboard extends React.Component {
                   Below are the live cluster statistics from cloud database
                 </p>
               </CardHeader>
-              <CardBody>
-                <Table
-                  tableHeaderColor="primary"
-                  tableHead={["Cluster ID", "Active Since", "Location", "Current status"]}
-                  tableData={[
-                    ["CL045761", "11-08-2018 12:22:45", "Niger",  "Active"],
-                    ["CL045762", "11-10-2018 01:22:09", "Curaçao", "Active"],
-                    ["CL045763", "11-11-2018 09:26:00", "Netherlands", "Inactive"],
-                    ["CL045764", "11-12-2018 03:56:45", "Korea, South", "Active"],
-                    ["CL045765", "11-14-2018 17:19:30", "Malawi", "Active"]
-                  ]}
-                />
-              </CardBody>
+              <table className='ProjectTable' tableHeaderColor="primary">
+                  <thead className='ProjectTable-head'>
+                  <tr>
+                      <th className='ProjectTable-header'>Cluster ID</th>
+                      <th className='ProjectTable-header'>Active Since</th>
+                      <th className='ProjectTable-header'>Location</th>
+                      <th className='ProjectTable-header'>Status</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {/*{nameslist}*/}
+                  {sensorData}
+                  </tbody>
+              </table>
             </Card>
           </GridItem>
         </GridContainer>
