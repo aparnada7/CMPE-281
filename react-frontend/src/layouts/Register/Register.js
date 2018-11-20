@@ -54,11 +54,19 @@ class Register extends Component {
       contactNumber:''
     }
     this.handleClick = this.handleClick.bind(this);
+    this.handleDropDownChange = this.handleDropDownChange.bind(this);
   }
 
   componentWillReceiveProps(nextProps){
     console.log("nextProps",nextProps);
   }
+
+  handleDropDownChange = e => {
+    e.preventDefault();
+    console.log(e.target.value);
+    this.setState({usertype: e.target.value});
+  };
+
   handleClick(event,role){
     event.preventDefault();
     if (this.state.password !== this.state.repassword) {
@@ -72,12 +80,12 @@ class Register extends Component {
     // console.log("values in register handler",role);
     var self = this;
     //To be done:check for empty values before hitting submit
-    if(this.state.first_name.length>0 && this.state.last_name.length>0 && this.state.email.length>0 && this.state.password.length>0){
+    if(this.state.user_name.length>0  && this.state.email.length>0 && this.state.password.length>0){
       var payload={
       "username": this.state.user_name,
       "email":this.state.email,
       "password":this.state.password,
-      "usertype":0,
+      "usertype":this.state.usertype,
       "contactNumber":this.state.contactNumber
       }
       axios.post(apiBaseUrl+'/signup', payload)
@@ -108,16 +116,6 @@ class Register extends Component {
 
   }
   render() {
-    // console.log("props",this.props);
-    // var userhintText,userLabel;
-    // if(this.props.role === "student"){
-    //   userhintText="Enter your Student Id",
-    //   userLabel="Student Id"
-    // }
-    // else{
-    //   userhintText="Enter your Teacher Id",
-    //   userLabel="Teacher Id"
-    // }
     return (
       <div style={divStyle}>
         <div style={opacityLayer}>
@@ -150,11 +148,10 @@ class Register extends Component {
                 onChange = {(event) => this.setState({contactNumber: event.target.value })} />
               </FormGroup>
 
-              <FormControl componentClass="select" placeholder="select">
-                <option value="select">Role</option>
-                <option value="other">Client</option>
-                <option value="other">IOT Manager</option>
-                <option value="other">User</option>
+              <FormControl componentClass="select" placeholder="select" onChange={this.handleDropDownChange}>
+                <option key="user" value="user">User</option>
+                <option key="client" value="client">Client</option>
+                <option key="manager" value="manager">IOT Manager</option>
               </FormControl>
               <FormGroup style={buttonStyle} controlId="formSubmit">
                
