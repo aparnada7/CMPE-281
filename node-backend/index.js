@@ -26,6 +26,8 @@ const getDashboard = require('./routes/getdashboard')
 const terminateNode = require('./routes/terminatenode')
 const startNode = require('./routes/startnode')
 const simulatedSensorRoutes = require('./routes/sensorsimulation')
+const fetchNode = require('./routes/fetchnode')
+const fetchCluster = require('./routes/fetchcluster')
 
 //use cors to allow cross origin resource sharing
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
@@ -71,6 +73,8 @@ app.get('/getdashboard', getDashboard)
 app.post('/terminatenode', terminateNode)
 app.post('/startnode', startNode)
 app.post('/sensorsimulation', simulatedSensorRoutes)
+app.post('/fetchnode', fetchNode)
+app.post('/fetchcluster', fetchCluster)
 
 
 app.listen(3001);
