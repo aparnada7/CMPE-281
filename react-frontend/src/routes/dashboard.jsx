@@ -16,6 +16,7 @@ import Icons from "views/Icons/Icons.jsx";
 import Maps from "views/Maps/Maps.jsx";
 import NotificationsPage from "views/Notifications/Notifications.jsx";
 import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.jsx";
+import LoginForm from "../layouts/LoginPage/LoginForm.js"
 
 
 const dashboardRoutes = [

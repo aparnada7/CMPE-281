@@ -27,6 +27,7 @@ const terminateNode = require('./routes/terminatenode')
 const startNode = require('./routes/startnode')
 const simulatedSensorRoutes = require('./routes/sensorsimulation')
 
+
 //use cors to allow cross origin resource sharing
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 
@@ -60,7 +61,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-/****************************Code****************************************** */
+/****************************Code*********************************************    */
 
 app.post('/signup', signupRoutes)
 app.post('/signin', signinRoutes)

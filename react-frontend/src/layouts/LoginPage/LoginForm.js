@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from 'axios'
 import {
   BrowserRouter as Router,
   Route,
@@ -8,6 +9,7 @@ import {
 } from "react-router-dom";
 //import { withRouter } from 'react-router-dom';
 import Dashboard from "layouts/Dashboard/Dashboard.jsx";
+import Register from "layouts/Register/RegisterPage";
 import dashboardRoutes from "routes/dashboard.jsx";
 import { Panel, Form, FormGroup, FormControl, Button } from "react-bootstrap";
 //import Register from './Register';
@@ -39,19 +41,27 @@ const buttonStyle = {
   justifyContent: "center"
 };
 
-class LoginForm extends React.Component {
-  constructor() {
-    super();
+class LoginForm extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
+      email: '',
+      password: '',
+      usertype: '',
+      authFlag: false,
       redirect: false
     };
     this.routeChange = this.routeChange.bind(this);
     this.setRedirect = this.setRedirect.bind(this);
+    this.emailChangeHandler = this.emailChangeHandler.bind(this)
+    this.passwordChangeHandler = this.passwordChangeHandler.bind(this)
+    this.roleChangeHandler = this.roleChangeHandler.bind(this)
+    this.handleFormSubmit = this.handleFormSubmit.bind(this)
   }
   routeChange(e) {
     e.preventDefault();
     console.log("gdhag");
-    let path = `/dashboard`;
+    let path = `/register`;
     this.props.history.push(path);
   }
 
@@ -67,13 +77,55 @@ class LoginForm extends React.Component {
     e.preventDefault();
     console.log("FORM Register!");
     if (this.state.redirect) {
-      return <Redirect to="/Dashboard" />;
+      return <Redirect to="/register" />;
     }
   };
-  handleFormSubmit(e) {
-    e.preventDefault();
 
-    console.log("FORM SUBMIT!");
+  emailChangeHandler = e => {
+    this.setState({
+      email: e.target.value
+    });
+    // console.log(this.state.email);
+  };
+
+  passwordChangeHandler = e => {
+    this.setState({
+      password: e.target.value
+    });
+  };
+
+  roleChangeHandler = e => {
+    this.setState({
+      usertype: e.target.value
+    });
+  };
+
+  handleFormSubmit(e) {
+    var headers = new Headers();
+    //prevent page from refresh
+    e.preventDefault();
+    const data = {
+      email: this.state.email,
+      password: this.state.password,
+      usertype: this.state.usertype
+    };
+    //set the with credentials to true
+    axios.defaults.withCredentials = true;
+    //make a post request with the user data
+    axios.post("http://localhost:3001/signin", data).then(response => {
+      console.log("Status Code : ", response.status);
+      if (response.status === 200) {
+        this.setState({
+          authFlag: true
+        });
+        
+      } else {
+        alert('Invalid email or password')
+        this.setState({
+          authFlag: false
+        });
+      }
+    });
   }
   handleFormRegister(e) {
     e.preventDefault();
@@ -82,7 +134,8 @@ class LoginForm extends React.Component {
   }
 
   render() {
-    if (this.state.redirect) return <Redirect to="/Dashboard" />;
+    if (this.state.redirect) return <Redirect to="/register" />;
+    if (this.state.authFlag) return <Redirect to="/dashboard" />;
 
     return (
       <div style={divStyle}>
@@ -90,17 +143,17 @@ class LoginForm extends React.Component {
           <h1 style={headingTitle}> User Login </h1>
           <Form horizontal className="LoginForm" id="loginForm">
             <FormGroup controlId="formEmail">
-              <FormControl type="email" placeholder="Email Address" />
+              <FormControl type="email" placeholder="Email Address" onChange={this.emailChangeHandler}/>
             </FormGroup>
             <FormGroup controlId="formPassword">
-              <FormControl type="password" placeholder="Password" />
+              <FormControl type="password" placeholder="Password" onChange={this.passwordChangeHandler}/>
             </FormGroup>
 
-            <FormControl componentClass="select" placeholder="select">
+            <FormControl componentClass="select" placeholder="select" onChange={this.roleChangeHandler}>
               <option value="select">Role</option>
-              <option value="other">Client</option>
-              <option value="other">IOT Manager</option>
-              <option value="other">User</option>
+              <option value="User">User</option>
+              <option value="Admin">Admin</option>
+              <option value="Manager">Manager</option>
             </FormControl>
             <FormGroup style={buttonStyle} controlId="formSubmit">
               <Button

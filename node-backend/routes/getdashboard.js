@@ -10,7 +10,6 @@ router.get('/getdashboard',function(req,res){
     var sql = "SELECT id_cluster_master_pk, cluster_location, last_updated, status, createdby, date_format(cluster_add_date, '%d %M %Y') as cluster_add_date FROM cluster_master"
     var sql2 = "SELECT id_node_master, node_location, last_updated, cluster_node_id_fk, status, createdby, date_format(node_add_date, '%d %M %Y') as node_add_date FROM node_master"
 
-
     pool.getConnection(function(err, con) {
     if (err) {
       res.writeHead(400, {

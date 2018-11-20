@@ -1,7 +1,7 @@
 import Dashboard from "layouts/Dashboard/Dashboard.jsx";
 import LoginPage from 'layouts/LoginPage/LoginPage';
-import Register from 'layouts/Register/RegisterPage';
+import RegisterPage from 'layouts/Register/RegisterPage';
 
-const indexRoutes = [{ path: "/register", component: Register}, {path: "/", component: LoginPage}, {path: "/dashboard", component: Dashboard}];
+const indexRoutes = [{ path: "/", component: LoginPage}, { path: "/register", component: RegisterPage}, { redirect: true, path: "/", to: "/", navbarName: "Redirect" }];
 
 export default indexRoutes;

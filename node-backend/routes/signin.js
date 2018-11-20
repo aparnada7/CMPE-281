@@ -8,10 +8,11 @@ router.post('/signin',function(req,res){
     
     console.log("Inside Login Post Request");
     console.log(req.body);
-        var username = req.body.username;
+        var email = req.body.email;
         var password = req.body.password;
-        var sql = "SELECT *  FROM user WHERE username = " + 
-                mysql.escape(username) + "and password = " + mysql.escape(password);
+        var usertype = req.body.usertype;
+        var sql = "SELECT *  FROM user WHERE email = " + 
+                mysql.escape(email) + "and password = " + mysql.escape(password) + "and usertype = " + mysql.escape(usertype);
 
     pool.getConnection(function(err,con){
         if(err){
