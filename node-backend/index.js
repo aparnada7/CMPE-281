@@ -25,6 +25,7 @@ const getNodeData = require('./routes/getnodedata')
 const getDashboard = require('./routes/getdashboard')
 const terminateNode = require('./routes/terminatenode')
 const startNode = require('./routes/startnode')
+const simulatedSensorRoutes = require('./routes/sensorsimulation')
 
 //use cors to allow cross origin resource sharing
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
@@ -69,6 +70,8 @@ app.post('/getnodedata', getNodeData)
 app.get('/getdashboard', getDashboard)
 app.post('/terminatenode', terminateNode)
 app.post('/startnode', startNode)
+app.post('/sensorsimulation', simulatedSensorRoutes)
+
 
 app.listen(3001);
 console.log("Server Listening on port 3001");
