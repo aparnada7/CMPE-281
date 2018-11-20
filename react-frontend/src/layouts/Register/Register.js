@@ -46,33 +46,53 @@ class Register extends Component {
   constructor(props){
     super(props);
     this.state={
-      first_name:'',
-      last_name:'',
+      user_name:'',
       email:'',
-      password:''
+      password:'',
+      repassword:'',
+      usertype:'',
+      contactNumber:''
     }
+    this.handleClick = this.handleClick.bind(this);
+    this.handleDropDownChange = this.handleDropDownChange.bind(this);
   }
+
   componentWillReceiveProps(nextProps){
     console.log("nextProps",nextProps);
   }
+
+  handleDropDownChange = e => {
+    e.preventDefault();
+    console.log(e.target.value);
+    this.setState({usertype: e.target.value});
+  };
+
   handleClick(event,role){
-    var apiBaseUrl = "http://localhost:4000/api/";
+    event.preventDefault();
+    if (this.state.password !== this.state.repassword) {
+      console.log("Passwords do not match!");
+      return;
+    } else {
+      console.log("Passwords match!");
+    }
+
+    var apiBaseUrl = "http://localhost:3001";
     // console.log("values in register handler",role);
     var self = this;
     //To be done:check for empty values before hitting submit
-    if(this.state.first_name.length>0 && this.state.last_name.length>0 && this.state.email.length>0 && this.state.password.length>0){
+    if(this.state.user_name.length>0  && this.state.email.length>0 && this.state.password.length>0){
       var payload={
-      "first_name": this.state.first_name,
-      "last_name":this.state.last_name,
-      "userid":this.state.email,
+      "username": this.state.user_name,
+      "email":this.state.email,
       "password":this.state.password,
-      "role":role
+      "usertype":this.state.usertype,
+      "contactNumber":this.state.contactNumber
       }
-      axios.post(apiBaseUrl+'/register', payload)
+      axios.post(apiBaseUrl+'/signup', payload)
      .then(function (response) {
        console.log(response);
        if(response.data.code === 200){
-          console.log("registration successfull");
+          console.log("registration successfull..");
          // var loginscreen=[];
          // loginscreen.push(<Login parentContext={this} appContext={self.props.appContext} role={role}/>);
          // var loginmessage = "Not Registered yet.Go to registration";
@@ -96,16 +116,6 @@ class Register extends Component {
 
   }
   render() {
-    // console.log("props",this.props);
-    // var userhintText,userLabel;
-    // if(this.props.role === "student"){
-    //   userhintText="Enter your Student Id",
-    //   userLabel="Student Id"
-    // }
-    // else{
-    //   userhintText="Enter your Teacher Id",
-    //   userLabel="Teacher Id"
-    // }
     return (
       <div style={divStyle}>
         <div style={opacityLayer}>
@@ -113,35 +123,39 @@ class Register extends Component {
             <h1 style={headingTitle}> New User Registration  </h1>
             <Form horizontal className="RegisterForm" id="registerForm">
 
-              <FormGroup controlId="firstName">
-                <FormControl type="text" placeholder="First Name" />
-              </FormGroup>
-
-              <FormGroup controlId="lasttName">
-                <FormControl type="text" placeholder="Last Name" />
+              <FormGroup controlId="userName">
+                <FormControl type="text" placeholder="User Name"
+                onChange = {(event) => this.setState({user_name: event.target.value })} />
               </FormGroup>
             
-              <FormGroup controlId="formPassword">
-                <FormControl type="password" placeholder="Password" />
+              <FormGroup controlId="email">
+                <FormControl type="email" placeholder="Email address"
+                onChange = {(event) => this.setState({email: event.target.value })} />
               </FormGroup>
 
               <FormGroup controlId="formPassword">
-                <FormControl type="password" placeholder="Retype Password" />
+                <FormControl type="password" placeholder="Password"
+                onChange = {(event) => this.setState({password: event.target.value })} />
               </FormGroup>
 
-              <FormGroup controlId="zip">
-                <FormControl type="text" placeholder="Zipcode" />
+              <FormGroup controlId="formRePassword">
+                <FormControl type="password" placeholder="Retype Password" 
+                onChange = {(event) => this.setState({repassword: event.target.value })} />
               </FormGroup>
 
-              <FormControl componentClass="select" placeholder="select">
-          <option value="select">Role</option>
-          <option value="other">Client</option>
-          <option value="other">IOT Manager</option>
-          <option value="other">User</option>
-        </FormControl>
+              <FormGroup controlId="contactNumber">
+                <FormControl type="number" placeholder="Contact Number" maxLength="10"
+                onChange = {(event) => this.setState({contactNumber: event.target.value })} />
+              </FormGroup>
+
+              <FormControl componentClass="select" placeholder="select" onChange={this.handleDropDownChange}>
+                <option key="user" value="user">User</option>
+                <option key="client" value="client">Client</option>
+                <option key="manager" value="manager">IOT Manager</option>
+              </FormControl>
               <FormGroup style={buttonStyle} controlId="formSubmit">
                
-                <Button bsStyle="primary" type="submit" onClick={this.setRedirect}>
+                <Button bsStyle="primary" type="submit" onClick={this.handleClick}>
                   Register
                 </Button>
               </FormGroup>

@@ -5,19 +5,29 @@ var pool = require('../db/pool')
 // var crypt = require("../bcrypt/crypto");
 
 router.post("/signup", function(req, res) {
-  console.log("Inside New user creation Request");
+  console.log("Inside New user creation Request..");
   console.log(req.body);
   var username = req.body.username;
   var email = req.body.email;
   var password = req.body.password;
   var usertype = req.body.usertype;
+  var contactNumber = req.body.contactNumber;
+  var date = new Date();
+  var timestamp = date.getTime();
+
   var sql =
-    "INSERT INTO user(username, email, password, userTypeID_fk) VALUES(" +
+    "INSERT INTO user(userId_pk, username, email, password, createTime, contactNo, usertype) VALUES(" +
+    0 +
+    "," +
     mysql.escape(username) +
     ", " +
     mysql.escape(email) +
     ", " +
     mysql.escape(password) +
+    ", " +
+    mysql.escape(timestamp) +
+    ", " +
+    mysql.escape(contactNumber) +
     ", " +
     mysql.escape(usertype) +
     ");";
