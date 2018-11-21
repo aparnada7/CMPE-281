@@ -10,6 +10,7 @@ import RegisterPage from "layouts/Register/RegisterPage";
 import Dashboard from "layouts/Dashboard/Dashboard.jsx";
 import Icons from "views/Icons/Icons.jsx";
 import AddSensor from "views/Icons/addSensor.jsx"
+import AddNode from "views/Icons/addNode.jsx"
 
 import "assets/css/material-dashboard-react.css?v=1.5.0";
 
@@ -28,6 +29,7 @@ ReactDOM.render(
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/icons" component={Icons} />
       <Route path="/addSensor" component={AddSensor} />
+      <Route path="/addNode" component={AddNode} />
       <Redirect to="/" />
     </Switch>
   </Router>,

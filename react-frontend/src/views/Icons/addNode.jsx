@@ -18,7 +18,7 @@ import CardBody from "components/Card/CardBody.jsx";
 import iconsStyle from "assets/jss/material-dashboard-react/views/iconsStyle.jsx";
 let divStyle1 = {align: 'center', backgroundColor: '#FEFDFD', padding: '28px', marginTop: '1px'};
 var data = [];
-class addSensor extends Component{
+class addNode extends Component{
     constructor(props) {
         super(props);
     }
@@ -48,13 +48,13 @@ class addSensor extends Component{
     }
 
     handleSubmit = () => {
-        API.addSensor(this.state.sensordata)
+        API.addNode(this.state.sensordata)
             .then((res) => {
                 if (res) {
                     this.setState({
-                        message: "Sensor Added!!",
+                        message: "Node Added!!",
                     });
-                    this.props.history.push("/addSensor");
+                    this.props.history.push("/addNode");
                 } else if (res.status === '401') {
                     console.log("in fail");
                     this.setState({
@@ -74,14 +74,15 @@ class addSensor extends Component{
             <GridContainer>
                 <div className="main-content text-left">
                     <div className="dashboard_tab_wrapper text-left">
-                        <div className="dashboard_tab  tab-clicked"><NavLink to="icons">Sensor Simulation</NavLink></div>
-                        <div className="dashboard_tab"> <NavLink to="/addSensor">Configure Sensor</NavLink></div>
+                        <div className="dashboard_tab  tab-clicked"><NavLink to="icons">Node Simulation</NavLink></div>
+                        <div className="dashboard_tab"> <NavLink to="/addSensor">Node Management Console</NavLink></div>
                     </div>
                 </div>
                 <GridItem xs={12} sm={12} md={12}>
                     <Card plain>
                         <CardHeader plain color="primary">
-                            <h4 className={classes.cardTitleWhite}>Sensor Details</h4>
+                            <h4 className={classes.cardTitleWhite}>Node Details</h4>
+                              <h6 className={classes.cardTitleWhite}>Please select options from below</h6>
                             <p className={classes.cardCategoryWhite}>
                             </p>
                         </CardHeader>
@@ -100,7 +101,7 @@ class addSensor extends Component{
                                         {/*</div>*/}
                                     </div>
                                     <div className="dropdown">
-                                        Select Node : <select id="ddlNode" className="form-control input-lg" value={this.state.sensordata.nodeId}
+                                        Select Cluster : <select id="ddlNode" className="form-control input-lg" value={this.state.sensordata.nodeId}
                                                 onChange={(event) => {
                                                     this.setState({
                                                         sensordata: {
@@ -111,10 +112,13 @@ class addSensor extends Component{
                                                 }} >
                                             <option value="1" >1</option>
                                             <option value="2" >2</option>
+                                            <option value="3" >3</option>
+                                            <option value="4" >4</option>
+                                            <option value="5" >5</option>
 
                                         </select> &nbsp; &nbsp;<br/>
 
-                                        Select Sensor Type : <select id="ddlNode" className="form-control input-lg" value={this.state.sensordata.sensorType}
+                                        Select Zone : <select id="ddlNode" className="form-control input-lg" value={this.state.sensordata.sensorType}
                                                               onChange={(event) => {
                                                                   this.setState({
                                                                       sensordata: {
@@ -123,14 +127,23 @@ class addSensor extends Component{
                                                                       }
                                                                   });
                                                               }} >
-                                        <option value="Temperature" >Temperature</option>
-                                        <option value="Humidity" >Humidity</option>
-                                        <option value="Light" >Light</option>
-                                        <option value="Pollution" >Pollution</option>
+                                        <option value="East" >East</option>
+                                        <option value="West" >West</option>
+                                        <option value="North" >North</option>
+                                        <option value="South" >South</option>
 
                                     </select> &nbsp; &nbsp;<br/>
 
-                                        Sensor Location: <input type="text" className="form-control" placeholder="Enter Sensor Location" value={this.state.sensordata.location}
+                                    Enter Node ID: <input type="text" className="form-control" placeholder="Enter Node ID" value={this.state.sensordata.location}
+                                                    onChange={(event) => {
+                                                        this.setState({
+                                                            sensordata: {
+                                                                ...this.state.sensordata,
+                                                                location: event.target.value
+                                                            }
+                                                        });
+                                                    }}/><br/>
+                                        Node Location: <input type="text" className="form-control" placeholder="Enter Node Location" value={this.state.sensordata.location}
                                                         onChange={(event) => {
                                                             this.setState({
                                                                 sensordata: {
@@ -140,7 +153,7 @@ class addSensor extends Component{
                                                             });
                                                         }}/><br/>
 
-                                    Sensor Make: <input type="text" className="form-control" placeholder="Enter Sensor Make" value={this.state.sensordata.sensor_make}
+                                    Node Make: <input type="text" className="form-control" placeholder="Enter Node Make" value={this.state.sensordata.sensor_make}
 
                                            onChange={(event) => {
                                                this.setState({
@@ -150,19 +163,7 @@ class addSensor extends Component{
                                                    }
                                                });
                                            }}/> <br/>
-                                    Sensor Model: <input type="text" className="form-control" placeholder="Enter Sensor Model" value={this.state.sensordata.sensor_model}
-                                           onChange={(event) => {
-                                               this.setState({
-                                                   sensordata: {
-                                                       ...this.state.sensordata,
-                                                       sensor_model: event.target.value
-                                                   }
-                                               });
-
-
-                                           }}/><br/>
-
-                                        Select Default Status : <select id="ddlNode" className="form-control input-lg" value={this.state.sensordata.status}
+                                                                                   Select Default Node Status : <select id="ddlNode" className="form-control input-lg" value={this.state.sensordata.status}
                                                                      onChange={(event) => {
                                                                          this.setState({
                                                                              sensordata: {
@@ -172,17 +173,19 @@ class addSensor extends Component{
                                                                          });
                                                                      }} >
                                         <option value="Active" >Active</option>
-                                        <option value="InActive" >InActive</option>
                                         <option value="Turn On" >Turn On</option>
+                                        <option value="InActive" >InActive</option>
+                                        <option value="Turn On" >Turn Off</option>
+                                        <option value="Turn On" >Maintenance</option>
                                     </select> &nbsp; &nbsp; <br/>
 
 
                                         <Button bsStyle="success" bsSize="sm" block
-                                            onClick={() => this.handleSubmit()}> Add Sensor </Button>
+                                            onClick={() => this.handleSubmit()}> Add Node </Button>
                                             <Button bsStyle="primary" bsSize="sm" block
-                                                onClick={() => this.handleSubmit()}> Update Sensor </Button>
+                                                onClick={() => this.handleSubmit()}> Update Node </Button>
                                                 <Button bsStyle="danger" bsSize="sm" block
-                                                    onClick={() => this.handleSubmit()}> Delete Sensor </Button>
+                                                    onClick={() => this.handleSubmit()}> Delete Node </Button>
                                 </div>
                                 </div>
 
@@ -197,8 +200,8 @@ class addSensor extends Component{
     }
 }
 
-addSensor.propTypes = {
+addNode.propTypes = {
     classes: PropTypes.object.isRequired
 };
 
-export default withStyles(iconsStyle)(addSensor);
+export default withStyles(iconsStyle)(addNode);

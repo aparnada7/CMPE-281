@@ -18,6 +18,7 @@ import NotificationsPage from "views/Notifications/Notifications.jsx";
 import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.jsx";
 import LoginForm from "../layouts/LoginPage/LoginForm.js"
 import AddSensor from "../views/Icons/addSensor"
+import AddNode from "../views/Icons/addNode"
 
 const dashboardRoutes = [
   {
@@ -42,11 +43,11 @@ const dashboardRoutes = [
     component: TableList
   },
   {
-    path: "/typography",
+    path: "/addNode",
     sidebarName: "Node Management",
     navbarName: "Node Management",
     icon: "wb_cloudy",
-    component: Typography
+    component: AddNode
   },
   {
     path: "/icons",
