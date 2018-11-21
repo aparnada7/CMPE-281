@@ -3,7 +3,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 //import AppBar from 'material-ui/AppBar';
 import {AppBar, Tabs, Tab} from 'material-ui'
 
-import RaisedButton from 'material-ui/RaisedButton';
+// import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import axios from 'axios';
 import { Panel, Form, FormGroup, FormControl, Button } from 'react-bootstrap';
@@ -42,7 +42,7 @@ const buttonStyle = {
 };
 
 class Register extends Component {
-  
+
   constructor(props){
     super(props);
     this.state={
@@ -91,8 +91,10 @@ class Register extends Component {
       axios.post(apiBaseUrl+'/signup', payload)
      .then(function (response) {
        console.log(response);
-       if(response.data.code === 200){
+       if(payload.username!=null && payload.email!= null && payload.password!=null && payload.usertype!=null && payload.contactNumber!=null){
           console.log("registration successfull..");
+          alert("Registration Successful!!");
+          window.location.href = "http://localhost:3000/";
          // var loginscreen=[];
          // loginscreen.push(<Login parentContext={this} appContext={self.props.appContext} role={role}/>);
          // var loginmessage = "Not Registered yet.Go to registration";
@@ -104,6 +106,7 @@ class Register extends Component {
        }
        else{
          console.log("some error ocurred",response.data.code);
+         window.location.href = "http://localhost:3000/";
        }
      })
      .catch(function (error) {
@@ -124,27 +127,27 @@ class Register extends Component {
             <Form horizontal className="RegisterForm" id="registerForm">
 
               <FormGroup controlId="userName">
-                <FormControl type="text" placeholder="User Name"
+                <FormControl type="text" placeholder="User Name" isRequired="true"
                 onChange = {(event) => this.setState({user_name: event.target.value })} />
               </FormGroup>
-            
+
               <FormGroup controlId="email">
-                <FormControl type="email" placeholder="Email address"
+                <FormControl type="email" placeholder="Email address" isRequired="true"
                 onChange = {(event) => this.setState({email: event.target.value })} />
               </FormGroup>
 
               <FormGroup controlId="formPassword">
-                <FormControl type="password" placeholder="Password"
+                <FormControl type="password" placeholder="Password" isRequired="true"
                 onChange = {(event) => this.setState({password: event.target.value })} />
               </FormGroup>
 
               <FormGroup controlId="formRePassword">
-                <FormControl type="password" placeholder="Retype Password" 
+                <FormControl type="password" placeholder="Retype Password" isRequired="true"
                 onChange = {(event) => this.setState({repassword: event.target.value })} />
               </FormGroup>
 
               <FormGroup controlId="contactNumber">
-                <FormControl type="number" placeholder="Contact Number" maxLength="10"
+                <FormControl type="number" placeholder="Contact Number" maxLength="10" isRequired="true"
                 onChange = {(event) => this.setState({contactNumber: event.target.value })} />
               </FormGroup>
 
@@ -154,7 +157,7 @@ class Register extends Component {
                 <option key="manager" value="manager">IOT Manager</option>
               </FormControl>
               <FormGroup style={buttonStyle} controlId="formSubmit">
-               
+
                 <Button bsStyle="primary" type="submit" onClick={this.handleClick}>
                   Register
                 </Button>
