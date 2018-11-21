@@ -17,7 +17,7 @@ import Maps from "views/Maps/Maps.jsx";
 import NotificationsPage from "views/Notifications/Notifications.jsx";
 import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.jsx";
 import LoginForm from "../layouts/LoginPage/LoginForm.js"
-
+import AddSensor from "../views/Icons/addSensor"
 
 const dashboardRoutes = [
   {
@@ -75,6 +75,13 @@ const dashboardRoutes = [
     navbarName: "LOGOUT",
     icon: "power_settings_new",
     component: UpgradeToPro
+  },
+  {
+        path: "/addSensor",
+        sidebarName: "Add Sensor",
+        navbarName: "Add Sensor",
+        icon: "wb_incandescent",
+        component: AddSensor
   },
   { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
 ];

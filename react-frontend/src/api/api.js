@@ -22,3 +22,19 @@ export const fetchSensorData = () =>
             console.log("This is error in fetch sensors");
             return error;
         });
+
+        export const addSensor = (sensorDetails) =>
+    fetch(`${api}/addSensor`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(sensorDetails)
+    }).then((res) => res.json())
+        .then((data) => {return data;})
+        .catch(error => {
+            console.log("This is error");
+            return error;
+        });
