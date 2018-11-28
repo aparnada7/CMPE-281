@@ -33,6 +33,8 @@ import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 
+import App1 from '../../layouts/GoogleMaps/app.js'
+
 import { bugs, website, server } from "variables/general.jsx";
 
 import {
@@ -43,6 +45,8 @@ import {
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
   var data = [];
+
+  
 
 class Dashboard extends React.Component {
   state = {
@@ -429,7 +433,7 @@ const sensorData = data.map((function(item){
         {
           //Sensor/Node/Cluster live feed data from DB will end here. Below will be Maintenance and TODOs.
         }
-        <GridContainer>
+     {/*}   <GridContainer>
           <GridItem xs={12} sm={12} md={6}>
             <CustomTabs
               title="Tasks:"
@@ -493,7 +497,11 @@ const sensorData = data.map((function(item){
               </CardBody>
             </Card>
           </GridItem>
-        </GridContainer>
+        </GridContainer>  */}
+        <div>
+        <h3>Active nodes</h3>
+       <App1 />  
+        </div>
       </div>
     );
   }

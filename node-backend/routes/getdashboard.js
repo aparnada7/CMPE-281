@@ -24,22 +24,11 @@ router.get('/getdashboard',function(req,res){
           });
           res.end("Invalid query");
         } else {
-        //   res.writeHead(200, {
-        //     "Content-Type": "application/json"
-        //   });
-        //   res.end(JSON.stringify(result));
-        //   console.log(result);
           totalclusters = result.length
           activeclusters = result.filter((element)=>{
               return (element.status === 'Active')
           })
           activeclusters = activeclusters.length
-        //   reply = {clusterdata: result,
-        //   totalclusters: totalclusters,
-        //   activeclusters: activeclusters
-        //   }
-        //   console.log(reply);
-        //   res.end(JSON.stringify(reply));
         }
       });
         con.query(sql2, function(err, result) {
@@ -52,8 +41,6 @@ router.get('/getdashboard',function(req,res){
           res.writeHead(200, {
             "Content-Type": "application/json"
           });
-        //   res.end(JSON.stringify(result));
-        //   console.log(result);
           totalnodes = result.length
           activenodes = result.filter((element)=>{
               return (element.status === 'Active')
