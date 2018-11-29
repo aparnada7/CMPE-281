@@ -19,6 +19,7 @@ import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.jsx";
 import LoginForm from "../layouts/LoginPage/LoginForm.js"
 import AddSensor from "../views/Icons/addSensor"
 import AddNode from "../views/Icons/addNode"
+import AddCluster from "../views/TableList/addCluster"
 
 const dashboardRoutes = [
   {
@@ -36,7 +37,7 @@ const dashboardRoutes = [
     component: UserProfile
   },
   {
-    path: "/table",
+    path: "/addCluster",
     sidebarName: "Cluster Management",
     navbarName: "Cluster Management",
     icon: BubbleChart,
