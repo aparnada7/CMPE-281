@@ -14,6 +14,12 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 
+import image from "assets/img/sidebar-2.jpg";
+import logo from "assets/img/reactlogo.png";
+import Sidebar from "components/Sidebar/Sidebar.jsx";
+import dashboardRoutes from "routes/dashboard.jsx";
+
+
 import iconsStyle from "assets/jss/material-dashboard-react/views/iconsStyle.jsx";
 var data = [];
 class Icons extends Component{
@@ -59,7 +65,7 @@ class Icons extends Component{
         }
 
         render() {
-            const {classes} = this.props;
+            const {classes, ...rest} = this.props;
             var self = this;
             console.log('map', data)
             const withKeys = data.map((function(item){
@@ -93,7 +99,20 @@ class Icons extends Component{
             }))
             return (
 
-
+              <div>
+              <div>
+                <Sidebar
+                  routes={dashboardRoutes}
+                  logoText={"My Smart City"}
+                  logo={logo}
+                  image={image}
+                  handleDrawerToggle={this.handleDrawerToggle}
+                  open={this.state.mobileOpen}
+                  color="blue"
+                  {...rest}
+                />
+                </div>
+                <div>
                 <GridContainer>
                     <div className="main-content text-left">
                         <div className="dashboard_tab_wrapper text-left">
@@ -101,7 +120,7 @@ class Icons extends Component{
                             <div className="dashboard_tab"> <NavLink to="/financialDashboardOut">Configure Sensor</NavLink></div>
                         </div>
                     </div>
-                    <GridItem xs={12} sm={12} md={12}>
+                    <GridItem xs={22} sm={22} md={22}>
                         <Card plain>
                             <CardHeader plain color="primary">
                                 <h4 className={classes.cardTitleWhite}>Sensor Details</h4>
@@ -136,6 +155,8 @@ class Icons extends Component{
                         </Card>
                     </GridItem>
                 </GridContainer>
+                </div>
+                </div>
             );
 
         }
