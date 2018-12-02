@@ -71,3 +71,22 @@ export const addCluster = (clusterDetails) =>
                         console.log("This is error");
                         return error;
                     });
+
+  export const searchSensor = (sensorID) =>
+                        fetch(`${api}/searchSensor`, {
+                            method: 'POST',
+                            headers: {
+                                ...headers,
+                                'Content-Type': 'application/json'
+                            },
+                            credentials: 'include',
+                            body: JSON.stringify(sensorID)
+                        }).then((res) => res.json())
+                            .then((data) => {
+                                console.log('API '+data);
+                                return data
+                                    ;})
+                            .catch(error => {
+                                console.log("This is error in searching sensor.");
+                                return error;
+                            });
