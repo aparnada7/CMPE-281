@@ -20,6 +20,7 @@ import LoginForm from "../layouts/LoginPage/LoginForm.js"
 import AddSensor from "../views/Icons/addSensor"
 import AddNode from "../views/Icons/addNode"
 import AddCluster from "../views/TableList/addCluster"
+import SensorData from "../views/SensorData/sensorData"
 
 const dashboardRoutes = [
   {
@@ -30,18 +31,18 @@ const dashboardRoutes = [
     component: DashboardPage
   },
   {
-    path: "/user",
+    path: "#",
     sidebarName: "User Profile",
     navbarName: "Profile",
     icon: Person,
     component: UserProfile
   },
   {
-    path: "/addCluster",
-    sidebarName: "Cluster Management",
-    navbarName: "Cluster Management",
+    path: "/node",
+    sidebarName: "View Sensor Data",
+    navbarName: "View Sensor Data",
     icon: BubbleChart,
-    component: TableList
+    component: SensorData
   },
   {
     path: "/addNode",
@@ -58,14 +59,14 @@ const dashboardRoutes = [
     component: Icons
   },
   {
-    path: "/maps",
+    path: "#",
     sidebarName: "View Reports",
     navbarName: "View Reports",
     icon: LibraryBooks,
     component: Maps
   },
   {
-    path: "/notifications",
+    path: "#",
     sidebarName: "Notifications",
     navbarName: "Notifications",
     icon: Notifications,

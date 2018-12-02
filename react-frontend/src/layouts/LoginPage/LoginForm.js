@@ -12,6 +12,7 @@ import Dashboard from "layouts/Dashboard/Dashboard.jsx";
 import Register from "layouts/Register/RegisterPage";
 import dashboardRoutes from "routes/dashboard.jsx";
 import { Panel, Form, FormGroup, FormControl, Button } from "react-bootstrap";
+import {nodeURL} from '../../config'
 //import Register from './Register';
 
 const divStyle = {};
@@ -112,7 +113,7 @@ class LoginForm extends Component {
     //set the with credentials to true
     axios.defaults.withCredentials = true;
     //make a post request with the user data
-    axios.post("http://localhost:3001/signin", data).then(response => {
+    axios.post(`${nodeURL}/signin`, data).then(response => {
       console.log("Status Code : ", response.status);
       if (response.status === 200) {
         this.setState({

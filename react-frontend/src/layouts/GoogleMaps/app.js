@@ -3,11 +3,11 @@ import GoogleMapReact from 'google-map-react';
 import { Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 
 const style = {
-  width: '50%',
-  height: '50%', 
+  width: '75%',
+  height: '60%', 
   position: 'relative',
-//   top: '700%',
-//   left: '50%',
+  top: '0%',
+  left: '20%',
   border: 'solid black 2px' 
 }
 

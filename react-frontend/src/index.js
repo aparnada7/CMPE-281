@@ -12,6 +12,7 @@ import Icons from "views/Icons/Icons.jsx";
 import AddSensor from "views/Icons/addSensor.jsx"
 import AddNode from "views/Icons/addNode.jsx"
 import AddCluster from "views/TableList/addCluster.jsx"
+import SensorData from "views/SensorData/sensorData"
 
 import "assets/css/material-dashboard-react.css?v=1.5.0";
 
@@ -32,6 +33,7 @@ ReactDOM.render(
       <Route path="/addSensor" component={AddSensor} />
       <Route path="/addNode" component={AddNode} />
       <Route path="/addCluster" component={AddCluster} />
+      <Route path="/node" component={SensorData} />
       <Redirect to="/" />
     </Switch>
   </Router>,

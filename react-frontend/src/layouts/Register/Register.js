@@ -8,6 +8,7 @@ import TextField from 'material-ui/TextField';
 import axios from 'axios';
 import { Panel, Form, FormGroup, FormControl, Button } from 'react-bootstrap';
 import Background from 'assets/img/background1.jpg';
+import {nodeURL} from '../../config'
 
 const divStyle = {
 
@@ -76,7 +77,7 @@ class Register extends Component {
       console.log("Passwords match!");
     }
 
-    var apiBaseUrl = "http://localhost:3001";
+    // var apiBaseUrl = "http://localhost:3001";
     // console.log("values in register handler",role);
     var self = this;
     //To be done:check for empty values before hitting submit
@@ -88,7 +89,7 @@ class Register extends Component {
       "usertype":this.state.usertype,
       "contactNumber":this.state.contactNumber
       }
-      axios.post(apiBaseUrl+'/signup', payload)
+      axios.post(`${nodeURL}/signup`, payload)
      .then(function (response) {
        console.log(response);
        if(payload.username!=null && payload.email!= null && payload.password!=null && payload.usertype!=null && payload.contactNumber!=null){

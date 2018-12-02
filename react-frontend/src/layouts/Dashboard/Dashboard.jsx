@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React from "react";
 import PropTypes from "prop-types";
+import axios from 'axios'
 import { Switch, Route, Redirect } from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
@@ -13,11 +14,16 @@ import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 
 import dashboardRoutes from "routes/dashboard.jsx";
+import moment from "moment";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import {nodeURL} from '../../config'
 
 import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboardStyle.jsx";
 
 import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
+import App1 from '../GoogleMaps/app.js'
 
 
 
@@ -35,10 +41,16 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mobileOpen: false
+      mobileOpen: false,
+      data: {},
+      node: '',
+      startDate: '',
+      endDate: '',
+      nodeData: {}
     };
     this.resizeFunction = this.resizeFunction.bind(this);
-  }
+  }  
+
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
   };
@@ -55,6 +67,16 @@ class App extends React.Component {
       const ps = new PerfectScrollbar(this.refs.mainPanel);
     }
     window.addEventListener("resize", this.resizeFunction);
+
+  axios
+      .get(`${nodeURL}/getdashboard`)
+      .then(response => {
+        console.log(response);
+        this.setState({
+          data: response.data
+        });
+      });
+      // console.log(this.state.data);
   }
   componentDidUpdate(e) {
     if (e.history.location.pathname !== e.location.pathname) {
@@ -97,9 +119,9 @@ class App extends React.Component {
           )}
           {this.getRoute() ? <Footer /> : null}
         </div>
-        <div>
-     {/*}   <App1 />  */}
-        </div>
+        
+
+       
       </div>
     );
   }
