@@ -8,7 +8,7 @@ router.post('/sensorsimulation',function(req,res){
     console.log("Inside get sensor Post Request");
 
     //var sql = "select id_sensor_master_pk, sensor_type, node_id_fk, sensor_model, sensor_make , status from sensor_master";
-    var sql = "select * from sensor_master";
+    var sql = "select * from sensor_master where status in ('Active', 'Turn On')";
 
     pool.getConnection(function(err,con){
         if(err){

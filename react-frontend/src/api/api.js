@@ -90,3 +90,21 @@ export const addCluster = (clusterDetails) =>
                                 console.log("This is error in searching sensor.");
                                 return error;
                             });
+
+
+
+export const simulateData = (sensorDataFoSimulation) =>
+    fetch(`${api}/simulateData`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(sensorDataFoSimulation)
+    }).then((res) => res.json())
+        .then((data) => {return data;})
+        .catch(error => {
+            console.log("This is error");
+            return error;
+        });

@@ -237,7 +237,8 @@ class addSensor extends Component{
       // this.setState({sensor_make : data[i].sensor_make})
       // this.setState({sensor_model : data[i].sensor_model})
       // this.setState({sensor_location : data[i].sensor_location})
-      // this.setState({status : data[i].status})
+      // this.setState({status : data[i].status})n
+
     }
 
     componentDidUpdate(){

@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
 import * as API from "../../api/api";
-
+import {Button} from 'react-bootstrap';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Hidden from "@material-ui/core/Hidden";
@@ -35,6 +35,39 @@ class Icons extends Component{
             message : ''
         };
 
+    handleSubmit(sensor_id, sensor_type){
+        console.log(sensor_id)
+        let sensorDataFoSimulation = {
+            sensor_id : sensor_id,
+            sensor_type : sensor_type
+        }
+        API.simulateData(sensorDataFoSimulation).then((res) => {
+            //console.log("status " +[res]);
+            if (res) {
+                console.log(' Success')
+                this.setState({
+                    isLoggedIn: true,
+                    message: "Data Simulated for the selected sensor"
+                });
+                //console.log("state " +data[0].sensor_make);
+                this.props.history.push('/icons');
+            } else if (res.status === '401') {
+                console.log("No records");
+                this.setState({
+                    isLoggedIn: true,
+                    message: "No Sensor found..!!",
+                });
+            } else if (res.status === '402') {
+                this.setState({
+                    isLoggedIn: false,
+                    message: "Session Expired..!!",
+                });
+                this.props.history.push('/login');
+            }
+        });
+
+
+    }
         componentWillMount() {
             API.fetchSensorData()
                 .then((res) => {
@@ -67,30 +100,23 @@ class Icons extends Component{
         render() {
             const {classes, ...rest} = this.props;
             var self = this;
-            console.log('map', data)
-            const withKeys = data.map((function(item){
+            //console.log('map', data)
+
+            const withKeys = data && data.map((function(item){
                 return(
                     <tr key={item.id_sensor_master_pk} onClick={self.handleClick} className="odd ProjectTable-row project-details">
                         {/*changed coloumn names as per mongo db column names*/}
                         <td className='ProjectTable-cell '>{item.id_sensor_master_pk}</td>
                         <td className='ProjectTable-cell '>{item.node_id_fk}</td>
                         <td className='ProjectTable-cell'>{item.sensor_location}</td>
-                        <td>{(new Date(item.sensor_add_date)).toLocaleDateString()}</td>
-                        <td className=' '>{item.sensor_model}</td>
+                        <td className='ProjectTable-cell'>{(new Date(item.sensor_add_date)).toLocaleDateString()}</td>
                         <td className='ProjectTable-cell'>{item.sensor_make}</td>
+                        <td className='ProjectTable-cell'>{item.sensor_model}</td>
+                        <td className='ProjectTable-cell'>{item.sensor_type}</td>
                         <td className='ProjectTable-cell'>{item.status}</td>
                         <td className='ProjectTable-cell'>
-                            <select id="ddlactions" className="input-sm"
-                                    onChange={(event) => {
-                                        this.setState({
-                                            actions: event.target.value
-                                        });
-                                    }} >
-                                <option value="Select" >Turn Off</option>
-                                <option value="Extend" >Turn On</option>
-                                <option value="CLose" >Maintenance</option>
-                                <option value="Delete" >Delete</option>
-                            </select> &nbsp; &nbsp;
+                            <Button bsStyle="success" bsSize="sm"
+                                    onClick={() => self.handleSubmit(item.id_sensor_master_pk, item.sensor_type)}> Simulate Data </Button> &nbsp; &nbsp;
                         </td>
 
 
@@ -124,20 +150,29 @@ class Icons extends Component{
                         <Card plain>
                             <CardHeader plain color="primary">
                                 <h4 className={classes.cardTitleWhite}>Sensor Details</h4>
-                                <p className={classes.cardCategoryWhite}>
-                                </p>
+                                <p className={classes.cardCategoryWhite}> </p>
                             </CardHeader>
                             <CardBody>
                                 <Hidden only={["sm", "xs"]}>
+                                    <div >
+                                        {/*<div className="col-md-3">*/}
+                                        {this.state.message && (
+                                            <div className="alert alert-warning" role="alert">
+                                                {this.state.message}
+                                            </div>
+                                        )}
+                                        {/*</div>*/}
+                                    </div>
                                     <table className='ProjectTable'>
                                         <thead className='ProjectTable-head'>
                                         <tr>
-                                            <th className='ProjectTable-header'>SENSOR ID</th>
-                                            <th className='ProjectTable-header'>NODE ID</th>
+                                            <th className='ProjectTable-header'>ID</th>
+                                            <th className='ProjectTable-header'>NODE   &nbsp;&nbsp;&nbsp;</th>
                                             <th className='ProjectTable-header'>LOCATION</th>
-                                            <th className='ProjectTable-header'>ADD DATE</th>
-                                            <th className='ProjectTable-header'>MODEL</th>
+                                            <th className='ProjectTable-header'>ADD DATE&nbsp;&nbsp;&nbsp;</th>
                                             <th className='ProjectTable-header'>MAKE</th>
+                                            <th className='ProjectTable-header'>MODEL</th>
+                                            <th className='ProjectTable-header'>TYPE</th>
                                             <th className='ProjectTable-header'>STATUS</th>
                                             <th className='ProjectTable-header'>ACTION</th>
                                         </tr>
