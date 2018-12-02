@@ -45,6 +45,13 @@ const dashboardRoutes = [
     component: SensorData
   },
   {
+    path: "/addCluster",
+    sidebarName: "Cluster Management",
+    navbarName: "Cluster Management",
+    icon: BubbleChart,
+    component: TableList
+  },
+  {
     path: "/addNode",
     sidebarName: "Node Management",
     navbarName: "Node Management",
