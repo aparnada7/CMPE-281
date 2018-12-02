@@ -30,6 +30,8 @@ const fetchNode = require('./routes/fetchnode')
 const fetchCluster = require('./routes/fetchcluster')
 const addSensorRoutes = require('./routes/addSensor')
 const Node = require('./routes/node')
+const searchSensor = require('./routes/searchSensor')
+
 
 //use cors to allow cross origin resource sharing
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
@@ -79,6 +81,7 @@ app.post('/fetchnode', fetchNode)
 app.post('/fetchcluster', fetchCluster)
 app.post('/addSensor', addSensorRoutes)
 app.post('/node', Node)
+app.get('/searchSensor', searchSensor)
 
 app.listen(3001);
 console.log("Server Listening on port 3001");
