@@ -17,6 +17,14 @@ import {nodeURL} from '../../config'
 
 const divStyle = {};
 
+const alertTextStyle ={
+  fontSize: "18px",
+  color: "red",
+  fontWeight: "bold",
+  fontFamily: "Roboto",
+  textAlign: 'center' 
+};
+
 const headingTitle = {
   fontSize: "25px",
   color: "white",
@@ -50,6 +58,7 @@ class LoginForm extends Component {
       password: '',
       usertype: '',
       authFlag: false,
+      invalidCred:false,
       redirect: false
     };
     this.routeChange = this.routeChange.bind(this);
@@ -121,9 +130,16 @@ class LoginForm extends Component {
         });
         
       } else {
-        alert('Invalid email or password')
+        //alert('Invalid email or password')
         this.setState({
-          authFlag: false
+          invalidCred: true
+        });
+      }
+    })
+    .catch(error => { 
+      if (error.response.status === 400) {
+        this.setState({
+          invalidCred: true
         });
       }
     });
@@ -142,6 +158,9 @@ class LoginForm extends Component {
       <div style={divStyle}>
         <Panel style={panelStyle}>
           <h1 style={headingTitle}> User Login </h1>
+          <div style={{backgroundColor: 'white', display: this.state.invalidCred ? 'block' : 'none' }}>
+            <p style={alertTextStyle}> Invalid email address or password provided! </p>
+          </div>
           <Form horizontal className="LoginForm" id="loginForm">
             <FormGroup controlId="formEmail">
               <FormControl type="email" placeholder="Email Address" onChange={this.emailChangeHandler}/>
