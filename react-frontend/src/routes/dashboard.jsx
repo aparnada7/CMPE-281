@@ -63,13 +63,14 @@ const dashboardRoutes = [
     component: AddNode,
     userType: "Admin Manager"
   },
-    {
-        path: "/addSensor",
-        sidebarName: "Sensor Management",
-        navbarName: "Sensor Management",
-        icon: "wb_incandescent",
-        component: AddSensor
-    },
+  {
+      path: "/addSensor",
+      sidebarName: "Sensor Management",
+      navbarName: "Sensor Management",
+      icon: "wb_incandescent",
+      component: AddSensor,
+      userType: "Admin Manager"
+  },
   {
     path: "/icons",
     sidebarName: "Sensor Simulation",
