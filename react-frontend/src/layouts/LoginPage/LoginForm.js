@@ -158,7 +158,7 @@ class LoginForm extends Component {
       <div style={divStyle}>
         <Panel style={panelStyle}>
           <h1 style={headingTitle}> User Login </h1>
-          <div style={{backgroundColor: 'white', display: this.state.invalidCred ? 'block' : 'none' }}>
+          <div className={this.state.invalidCred ? "alert alertVisible" : "alert alertHidden"}>
             <p style={alertTextStyle}> Invalid email address or password provided! </p>
           </div>
           <Form horizontal className="LoginForm" id="loginForm">

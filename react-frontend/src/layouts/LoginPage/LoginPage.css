@@ -9,3 +9,15 @@
     align-items: center;
     justify-content: center;
 }
+
+.alert {
+	background-color: white;
+}
+
+.alertVisible {
+	display: block;
+}
+
+.alertHidden {
+	display: none;
+}
