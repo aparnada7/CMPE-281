@@ -36,6 +36,11 @@ const simulateData = require('./routes/simulateData')
 const getSensor = require('./routes/getSensor')
 const deleteSensor = require('./routes/deleteSensor')
 const updateSensor = require('./routes/updateSensor')
+const addNode = require('./routes/addNode')
+const addCluster = require('./routes/addCluster')
+const getNode = require('./routes/getNode')
+const updateNode = require('./routes/updateNode')
+const deleteNode = require('./routes/deleteNode')
 
 //use cors to allow cross origin resource sharing
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
@@ -90,6 +95,11 @@ app.post('/simulateData', simulateData)
 app.post('/getSensor', getSensor)
 app.post('/deleteSensor', deleteSensor)
 app.post('/updateSensor', updateSensor)
+app.post('/addNode', addNode)
+app.post('/addCluster', addCluster)
+app.post('/getNode', getNode)
+app.post('/updateNode', updateNode)
+app.post('/deleteNode', deleteNode)
 
 app.listen(3001);
 console.log("Server Listening on port 3001");
