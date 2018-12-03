@@ -69,7 +69,6 @@ class addSensor extends Component {
             delmessage: '',
             updatemessage: '',
 
-
         });
 
         API.fetchSensorData()
