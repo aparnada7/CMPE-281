@@ -23,13 +23,18 @@ import dashboardRoutes from "routes/dashboard.jsx";
 import iconsStyle from "assets/jss/material-dashboard-react/views/iconsStyle.jsx";
 let divStyle1 = {align: 'center', backgroundColor: '#FEFDFD', padding: '28px', marginTop: '1px'};
 var data = [];
-class addCluster extends Component{
+class addCluster extends Component {
     constructor(props) {
         super(props);
     }
 
     state = {
+      clusterdata: {
+        cluster_location:'',
+        cluster_status:''
+      },
         sensordata: {
+            sensorID: '',
             sensor_make: '',
             sensor_model: '',
             location: '',
@@ -37,23 +42,75 @@ class addCluster extends Component{
             nodeId: '',
             sensorType: '',
             createdBy: ''
-        }
+        },
+        updatesensordata: {
+            usensorID: '',
+            usensor_make: '',
+            usensor_model: '',
+            ulocation: '',
+            ustatus: '',
+
+            usensorType: '',
+            ucreatedBy: ''
+        },
+        isFound: false,
+        delmessage: '',
+        updatemessage: ''
+
     };
 
     componentWillMount() {
         this.setState({
+            sensorID: '',
             sensor_make: '',
             sensor_model: '',
-            location:'',
-            status:'',
-            nodeId:'',
+            location: '',
+            status: '',
+            nodeId: '',
             sensorType: '',
-            createdBy: ''
+            createdBy: '',
+
+            delmessage: '',
+            updatemessage: '',
+
+            cluster_location:'',
+            cluster_status:''
+
+
         });
+
+        API.fetchSensorData()
+            .then((res) => {
+                //console.log("status " +[res]);
+                if (res) {
+                    console.log(' Success')
+                    this.setState({
+                        isLoggedIn: true,
+                        sensordata: res
+                    });
+                    data = res;
+                    console.log('ID: ', this.state.sensordata.sensorID)
+                    console.log('map', data)
+                    this.props.history.push('/addCluster');
+                } else if (res.status === '401') {
+                    console.log("No records");
+                    this.setState({
+                        isLoggedIn: true,
+                        message: "No Nodes found..!!",
+                    });
+                } else if (res.status === '402') {
+                    this.setState({
+                        isLoggedIn: false,
+                        message: "Session Expired..!!",
+                    });
+                    this.props.history.push('/login');
+                }
+            });
     }
 
     handleSubmit = () => {
-        API.addCluster(this.state.sensordata)
+      console.log("Sending cluster details : ", this.state.clusterdata)
+        API.addCluster(this.state.clusterdata)
             .then((res) => {
                 if (res) {
                     this.setState({
@@ -71,9 +128,145 @@ class addCluster extends Component{
             });
     };
 
+    handleSearch = (sensorID) => {
+        //alert("Searching ....."+usensorID);
+        let sensorIDJSON = {sensorID: sensorID}
+        API.getSensor(sensorIDJSON)
+            .then((res) => {
+                //console.log("status " +[res]);
+                if (res.length > 0) {
+                    console.log(' Success')
+                    this.setState({
+                        isLoggedIn: true,
+                        usensorType: res[0].sensor_type,
+                        usensor_make: res[0].sensor_make,
+                        usensor_model: res[0].sensor_model,
+                        ulocation: res[0].sensor_location,
+                        ustatus: res[0].status,
+                        updatemessage: ''
+                    });
+                    //console.log("state sensor " +this.state.updatesensordata.usensor_make);
+                    //this.props.history.push('/addSensor');
+                } else if (res.status === '401') {
+                    console.log("No cluster with the given ID found");
+                    this.setState({
+                        isLoggedIn: true,
+                        message: "No cluster with the given ID found..!!",
+                    });
+                } else if (res.status === '402') {
+                    this.setState({
+                        isLoggedIn: false,
+                        message: "Session Expired..!!",
+                    });
+                    this.props.history.push('/login');
+                } else {
+                    this.setState({
+                        updatemessage: "No cluster with the given ID found!!",
+                    });
+                }
+            });
+
+
+    }
+
+
+    handleDelSearch = (sensorID) => {
+        let sensorIDJSON = {sensorID: sensorID}
+        API.getSensor(sensorIDJSON)
+            .then((res) => {
+                //console.log("status " +[res]);
+                if (res.length > 0) {
+                    console.log(' Success')
+                    this.setState({
+                        isLoggedIn: true,
+                        sensor_type: res[0].sensor_type,
+                        sensor_make: res[0].sensor_make,
+                        sensor_model: res[0].sensor_model,
+                        sensor_location: res[0].sensor_location,
+                        status: res[0].status,
+                        delmessage: ''
+                    });
+                } else if (res.status === '401') {
+                    console.log("No cluster with the given ID found");
+                    this.setState({
+                        isLoggedIn: true,
+                        delmessage: "No cluster with the given ID found..!!",
+                    });
+                } else if (res.status === '402') {
+                    this.setState({
+                        isLoggedIn: false,
+                        message: "Session Expired..!!",
+                    });
+                    this.props.history.push('/login');
+                } else {
+                    this.setState({
+                        delmessage: "No cluster with the given ID found!!",
+                    });
+                }
+            });
+    }
+
+
+    handleUpdate = (updateData) => {
+        //console.log('Updated Data ', updateData)
+        API.updateSensor(updateData)
+            .then((res) => {
+                if (res.length > 0) {
+                    console.log(' Success in delete ')
+                    this.setState({
+                        usensorType: '',
+                        usensor_make: '',
+                        usensor_model: '',
+                        ulocation: '',
+                        ustatus: '',
+                        usensorID: '',
+                        updatemessage: 'Selected cluster Updated!!'
+                    });
+                    //console.log("state sensor " +this.state.updatesensordata.usensor_make);
+                    //this.props.history.push('/addSensor');
+                } else if (res.status === '401') {
+                    console.log("No cluster with the given ID found");
+                    this.setState({
+                        isLoggedIn: true,
+                        message: "No cluster with the given ID found..!!",
+                    });
+                }
+            });
+
+    }
+
+
+    handleDelete = (sensorID) => {
+        let sensorIDJSON = {sensorID: sensorID}
+        API.deleteSensor(sensorIDJSON)
+            .then((res) => {
+                if (res.length > 0) {
+                    console.log(' Success in delete ')
+                    this.setState({
+                        sensor_make: '',
+                        sensor_model: '',
+                        sensor_location: '',
+                        status: '',
+                        sensorID: '',
+                        updatemessage: 'Below cluster deleted!!'
+                    });
+                    //console.log("state sensor " +this.state.updatesensordata.usensor_make);
+                    //this.props.history.push('/addSensor');
+                } else if (res.status === '401') {
+                    console.log("No cluster with the given ID found");
+                    this.setState({
+                        isLoggedIn: true,
+                        message: "No cluster with the given ID found..!!",
+                    });
+                }
+            });
+    }
+
+    // componentDidUpdate(){
+    //   console.multerConfig
+    // }
     render() {
-        const { classes, ...rest } = this.props;
-        // const {classes} = this.props;
+        const {classes, ...rest} = this.props;
         return (
 
           <div>
@@ -94,14 +287,17 @@ class addCluster extends Component{
                 <div className="main-content text-left">
                     <div className="dashboard_tab_wrapper text-left">
                         <div className="dashboard_tab  tab-clicked"><NavLink to="icons">Cluster Simulation</NavLink></div>
-                        <div className="dashboard_tab"> <NavLink to="/addCluster">Cluster Management</NavLink></div>
+                        <div className="dashboard_tab"> <NavLink to="/addNode">Cluster Sensor</NavLink></div>
                     </div>
                 </div>
+
+                {//SECTION ADD NODE starts
+                }
                 <GridItem xs={102} sm={102} md={102}>
                     <Card plain>
                         <CardHeader plain color="primary">
-                            <h4 className={classes.cardTitleWhite} text-align="center" >ADD CLUSTER</h4>
-                              <h6 className={classes.cardTitleWhite}>Please select options from below</h6>
+                            <h4 className={classes.cardTitleWhite}>ADD CLUSTER</h4>
+                            <h6 className={classes.cardTitleWhite}>Please select options from below</h6>
                             <p className={classes.cardCategoryWhite}>
                             </p>
                         </CardHeader>
@@ -120,59 +316,36 @@ class addCluster extends Component{
                                         {/*</div>*/}
                                     </div>
                                     <div className="dropdown">
-                                        Select Cluster : <select id="ddlNode" className="form-control input-lg" value={this.state.sensordata.nodeId}
-                                                onChange={(event) => {
-                                                    this.setState({
-                                                        sensordata: {
-                                                            ...this.state.sensordata,
-                                                            nodeId: event.target.value
-                                                        }
-                                                    });
-                                                }} >
-                                            <option value="1" >1</option>
-                                            <option value="2" >2</option>
-                                            <option value="3" >3</option>
-                                            <option value="4" >4</option>
-                                            <option value="5" >5</option>
 
-                                        </select> &nbsp; &nbsp;<br/>
 
-                                        Select Zone : <select id="ddlNode" className="form-control input-lg" value={this.state.sensordata.sensorType}
-                                                              onChange={(event) => {
-                                                                  this.setState({
-                                                                      sensordata: {
-                                                                          ...this.state.sensordata,
-                                                                          sensorType: event.target.value
-                                                                      }
-                                                                  });
-                                                              }} >
-                                        <option value="East" >East</option>
-                                        <option value="West" >West</option>
-                                        <option value="North" >North</option>
-                                        <option value="South" >South</option>
+                                  {  /*Enter Node ID Type : <select id="ddlNode" className="form-control input-lg" value={this.state.sensordata.sensorType}
+                                                          onChange={(event) => {
+                                                              this.setState({
+                                                                  sensordata: {
+                                                                      ...this.state.sensordata,
+                                                                      sensorType: event.target.value
+                                                                  }
+                                                              });
+                                                          }} >
+                                    <option value="select" >Select </option>
+                                    <option value="Temperature" >Temperature</option>
+                                    <option value="Humidity" >Humidity</option>
+                                    <option value="Light" >Light</option>
+                                    <option value="Pollution" >Pollution</option>
 
-                                    </select> &nbsp; &nbsp;<br/>
+                                </select> &nbsp; &nbsp;<br/>*/}
 
-                                    Enter Cluster ID: <input type="text" className="form-control" placeholder="Enter Node ID" value={this.state.sensordata.location}
-                                                    onChange={(event) => {
-                                                        this.setState({
-                                                            sensordata: {
-                                                                ...this.state.sensordata,
-                                                                location: event.target.value
-                                                            }
-                                                        });
-                                                    }}/><br/>
-                                        Cluster Location: <input type="text" className="form-control" placeholder="Enter Node Location" value={this.state.sensordata.location}
+                                        Cluster Location: <input type="text" className="form-control" placeholder="Enter Cluster Location" value={this.state.clusterdata.cluster_location}
                                                         onChange={(event) => {
                                                             this.setState({
-                                                                sensordata: {
-                                                                    ...this.state.sensordata,
-                                                                    location: event.target.value
+                                                                clusterdata: {
+                                                                    ...this.state.clusterdata,
+                                                                    cluster_location: event.target.value
                                                                 }
                                                             });
                                                         }}/><br/>
 
-                                    Cluster Make: <input type="text" className="form-control" placeholder="Enter Node Make" value={this.state.sensordata.sensor_make}
+                                  { /* SenNodesor Make: <input type="text" className="form-control" placeholder="Enter Sensor Make" value={this.state.sensordata.sensor_make}
 
                                            onChange={(event) => {
                                                this.setState({
@@ -182,25 +355,38 @@ class addCluster extends Component{
                                                    }
                                                });
                                            }}/> <br/>
-                                                                                   Select Default Cluster Status : <select id="ddlNode" className="form-control input-lg" value={this.state.sensordata.status}
+                                    Sensor Model: <input type="text" className="form-control" placeholder="Enter Sensor Model" value={this.state.sensordata.sensor_model}
+                                           onChange={(event) => {
+                                               this.setState({
+                                                   sensordata: {
+                                                       ...this.state.sensordata,
+                                                       sensor_model: event.target.value
+                                                   }
+                                               });
+
+
+                                           }}/><br/> */}
+
+                                        Select Cluster Status : <select id="ddlNode" className="form-control input-lg" value={this.state.clusterdata.cluster_status}
                                                                      onChange={(event) => {
                                                                          this.setState({
-                                                                             sensordata: {
-                                                                                 ...this.state.sensordata,
-                                                                                 status: event.target.value
+                                                                             clusterdata: {
+                                                                                 ...this.state.clusterdata,
+                                                                                 cluster_status: event.target.value
                                                                              }
                                                                          });
                                                                      }} >
+                                        <option value="select" >select</option>
                                         <option value="Active" >Active</option>
-                                        <option value="Turn On" >Turn On</option>
                                         <option value="InActive" >InActive</option>
-                                        <option value="Turn On" >Turn Off</option>
-                                        <option value="Turn On" >Maintenance</option>
+                                        <option value="Turn On" >Turn On</option>
+                                        <option value="Turn Off" >Turn Off</option>
+                                        <option value="Maintenance" >Maintenance</option>
                                     </select> &nbsp; &nbsp; <br/>
 
 
                                         <Button bsStyle="success" bsSize="sm" block
-                                            onClick={() => this.handleSubmit()}> Confirm </Button>
+                                            onClick={() => this.handleSubmit()}> Add Cluster </Button>
 
                                 </div>
                                 </div>
@@ -210,15 +396,16 @@ class addCluster extends Component{
                         </CardBody>
                     </Card>
                 </GridItem>
-
-                {//SECTION UPDATE NODE starts
+                {//SECTION ADD CLUSTER stops
                 }
 
+                {//SECTION UPDATE CLUSTER starts
+                }
                 <GridItem xs={102} sm={102} md={102}>
                     <Card plain>
                         <CardHeader plain color="primary">
-                            <h4 className={classes.cardTitleWhite} text-align="center" >UPDATE CLUSTER</h4>
-                              <h6 className={classes.cardTitleWhite}>Please select options from below</h6>
+                            <h4 className={classes.cardTitleWhite}>UPDATE CLUSTER</h4>
+                            <h6 className={classes.cardTitleWhite}>Please select options from below</h6>
                             <p className={classes.cardCategoryWhite}>
                             </p>
                         </CardHeader>
@@ -229,96 +416,62 @@ class addCluster extends Component{
                                     {/*<div>*/}
                                     <div >
                                         {/*<div className="col-md-3">*/}
-                                        {this.state.message && (
+                                        {this.state.updatemessage && (
                                             <div className="alert alert-warning" role="alert">
-                                                {this.state.message}
+                                                {this.state.updatemessage}
                                             </div>
                                         )}
                                         {/*</div>*/}
                                     </div>
                                     <div className="dropdown">
-                                        Select Cluster : <select id="ddlNode" className="form-control input-lg" value={this.state.sensordata.nodeId}
-                                                onChange={(event) => {
-                                                    this.setState({
-                                                        sensordata: {
-                                                            ...this.state.sensordata,
-                                                            nodeId: event.target.value
-                                                        }
-                                                    });
-                                                }} >
-                                            <option value="1" >1</option>
-                                            <option value="2" >2</option>
-                                            <option value="3" >3</option>
-                                            <option value="4" >4</option>
-                                            <option value="5" >5</option>
-
-                                        </select> &nbsp; &nbsp;<br/>
-
-                                        Select Zone : <select id="ddlNode" className="form-control input-lg" value={this.state.sensordata.sensorType}
-                                                              onChange={(event) => {
-                                                                  this.setState({
-                                                                      sensordata: {
-                                                                          ...this.state.sensordata,
-                                                                          sensorType: event.target.value
-                                                                      }
-                                                                  });
-                                                              }} >
-                                        <option value="East" >East</option>
-                                        <option value="West" >West</option>
-                                        <option value="North" >North</option>
-                                        <option value="South" >South</option>
-
-                                    </select> &nbsp; &nbsp;<br/>
-
-                                    Enter Cluster ID: <input type="text" className="form-control" placeholder="Enter Node ID" value={this.state.sensordata.location}
+                                    Search by Cluster ID: <input type="text" className="form-control" placeholder="Cluster ID" value={this.state.updatesensordata.usensorID}
                                                     onChange={(event) => {
                                                         this.setState({
-                                                            sensordata: {
-                                                                ...this.state.sensordata,
-                                                                location: event.target.value
+                                                            updatesensordata: {
+                                                                ...this.state.updatesensordata,
+                                                                usensorID: event.target.value
                                                             }
                                                         });
                                                     }}/><br/>
-                                        Cluster Location: <input type="text" className="form-control" placeholder="Enter Node Location" value={this.state.sensordata.location}
+                                                    <Button bsStyle="info" bsSize="sm" block
+                                                        onClick={() => this.handleSearch(this.state.updatesensordata.usensorID)}> Search Cluster </Button>
+                                                    <hr/>
+
+
+                                        Update Cluster Location: <input type="text" className="form-control" placeholder="Cluster Location" defaultValue={this.state.ulocation}
                                                         onChange={(event) => {
                                                             this.setState({
-                                                                sensordata: {
-                                                                    ...this.state.sensordata,
-                                                                    location: event.target.value
+                                                                updatesensordata: {
+                                                                    ...this.state.updatesensordata,
+                                                                    ulocation: event.target.value
                                                                 }
                                                             });
                                                         }}/><br/>
 
-                                    Cluster Make: <input type="text" className="form-control" placeholder="Enter Node Make" value={this.state.sensordata.sensor_make}
 
-                                           onChange={(event) => {
-                                               this.setState({
-                                                   sensordata: {
-                                                       ...this.state.sensordata,
-                                                       sensor_make: event.target.value
-                                                   }
-                                               });
-                                           }}/> <br/>
-                                                                                   Select Default Cluster Status : <select id="ddlNode" className="form-control input-lg" value={this.state.sensordata.status}
+
+
+                                      Update Cluster Status : <select id="ddlNode" className="form-control input-lg" defaultValue={this.state.ustatus}
                                                                      onChange={(event) => {
                                                                          this.setState({
-                                                                             sensordata: {
-                                                                                 ...this.state.sensordata,
-                                                                                 status: event.target.value
+                                                                             updatesensordata: {
+                                                                                 ...this.state.updatesensordata,
+                                                                                 ustatus: event.target.value
                                                                              }
                                                                          });
                                                                      }} >
+                                        <option value="select" >select</option>
                                         <option value="Active" >Active</option>
-                                        <option value="Turn On" >Turn On</option>
                                         <option value="InActive" >InActive</option>
-                                        <option value="Turn On" >Turn Off</option>
-                                        <option value="Turn On" >Maintenance</option>
+                                        <option value="Turn On" >Turn On</option>
+                                        <option value="Turn Off" >Turn Off</option>
+                                        <option value="Maintenance" >Maintenance</option>
                                     </select> &nbsp; &nbsp; <br/>
 
 
 
                                             <Button bsStyle="primary" bsSize="sm" block
-                                                onClick={() => this.handleSubmit()}> Update Cluster </Button>
+                                                onClick={() => this.handleUpdate(this.state.updatesensordata)}> Update Cluster </Button>
 
                                 </div>
                                 </div>
@@ -328,17 +481,17 @@ class addCluster extends Component{
                         </CardBody>
                     </Card>
                 </GridItem>
-
-                {//SECTION UPDATE NODE stops
+                {//SECTION UPDATE CLUSTER stops
                 }
 
-                {//SECTION DELETE NODE starts
+
+                {//SECTION DELETE CLUSTER starts
                 }
                 <GridItem xs={102} sm={102} md={102}>
                     <Card plain>
                         <CardHeader plain color="primary">
-                            <h4 className={classes.cardTitleWhite} text-align="center" >DELETE CLUSTER</h4>
-                              <h6 className={classes.cardTitleWhite}>Please select options from below</h6>
+                            <h4 className={classes.cardTitleWhite}>DELETE CLUSTER</h4>
+                            <h6 className={classes.cardTitleWhite}>Please select options from below</h6>
                             <p className={classes.cardCategoryWhite}>
                             </p>
                         </CardHeader>
@@ -349,96 +502,59 @@ class addCluster extends Component{
                                     {/*<div>*/}
                                     <div >
                                         {/*<div className="col-md-3">*/}
-                                        {this.state.message && (
+                                        {this.state.delmessage && (
                                             <div className="alert alert-warning" role="alert">
-                                                {this.state.message}
+                                                {this.state.delmessage}
                                             </div>
                                         )}
                                         {/*</div>*/}
                                     </div>
                                     <div className="dropdown">
-                                        Select Cluster : <select id="ddlNode" className="form-control input-lg" value={this.state.sensordata.nodeId}
-                                                onChange={(event) => {
-                                                    this.setState({
-                                                        sensordata: {
-                                                            ...this.state.sensordata,
-                                                            nodeId: event.target.value
-                                                        }
-                                                    });
-                                                }} >
-                                            <option value="1" >1</option>
-                                            <option value="2" >2</option>
-                                            <option value="3" >3</option>
-                                            <option value="4" >4</option>
-                                            <option value="5" >5</option>
 
-                                        </select> &nbsp; &nbsp;<br/>
 
-                                        Select Zone : <select id="ddlNode" className="form-control input-lg" value={this.state.sensordata.sensorType}
-                                                              onChange={(event) => {
-                                                                  this.setState({
-                                                                      sensordata: {
-                                                                          ...this.state.sensordata,
-                                                                          sensorType: event.target.value
-                                                                      }
-                                                                  });
-                                                              }} >
-                                        <option value="East" >East</option>
-                                        <option value="West" >West</option>
-                                        <option value="North" >North</option>
-                                        <option value="South" >South</option>
-
-                                    </select> &nbsp; &nbsp;<br/>
-
-                                    Enter Cluster ID: <input type="text" className="form-control" placeholder="Enter Node ID" value={this.state.sensordata.location}
+                                    Search by Cluster ID: <input type="text" className="form-control" placeholder="Enter Cluster ID" value={this.state.sensordata.sensorID}
                                                     onChange={(event) => {
                                                         this.setState({
                                                             sensordata: {
                                                                 ...this.state.sensordata,
-                                                                location: event.target.value
+                                                                sensorID: event.target.value
                                                             }
                                                         });
                                                     }}/><br/>
-                                        Cluster Location: <input type="text" className="form-control" placeholder="Enter Node Location" value={this.state.sensordata.location}
-                                                        onChange={(event) => {
-                                                            this.setState({
-                                                                sensordata: {
-                                                                    ...this.state.sensordata,
-                                                                    location: event.target.value
-                                                                }
-                                                            });
-                                                        }}/><br/>
+                                                    <Button bsStyle="info" bsSize="sm" block
+                                                        onClick={() => this.handleDelSearch(this.state.sensordata.sensorID)}> Search Cluster</Button>
+                                                    <hr/>
 
-                                    Cluster Make: <input type="text" className="form-control" placeholder="Enter Node Make" value={this.state.sensordata.sensor_make}
 
-                                           onChange={(event) => {
-                                               this.setState({
-                                                   sensordata: {
-                                                       ...this.state.sensordata,
-                                                       sensor_make: event.target.value
-                                                   }
-                                               });
-                                           }}/> <br/>
-                                                                                   Select Default Cluster Status : <select id="ddlNode" className="form-control input-lg" value={this.state.sensordata.status}
-                                                                     onChange={(event) => {
-                                                                         this.setState({
-                                                                             sensordata: {
-                                                                                 ...this.state.sensordata,
-                                                                                 status: event.target.value
-                                                                             }
-                                                                         });
-                                                                     }} >
-                                        <option value="Active" >Active</option>
-                                        <option value="Turn On" >Turn On</option>
-                                        <option value="InActive" >InActive</option>
-                                        <option value="Turn On" >Turn Off</option>
-                                        <option value="Turn On" >Maintenance</option>
-                                    </select> &nbsp; &nbsp; <br/>
 
+                                  Cluster Location: <input type="text" className="form-control" readonly="readonly" placeholder="Cluster Location" value={this.state.sensor_location}
+                                                          onChange={(event) => {
+                                                              this.setState({
+                                                                  sensordata: {
+                                                                      ...this.state.sensordata,
+                                                                      sensor_model: event.target.value
+                                                                  }
+                                                              });
+
+
+                                                          }}/><br/>
+
+                                   Cluster Status: <input type="text" className="form-control" readonly="readonly" placeholder="Cluster Status" value={this.state.status}
+                                                  onChange={(event) => {
+                                                      this.setState({
+                                                          sensordata: {
+                                                              ...this.state.sensordata,
+                                                              sensor_model: event.target.value
+                                                          }
+                                                      });
+
+
+                                                  }}/><br/>
 
 
                                                 <Button bsStyle="danger" bsSize="sm" block
-                                                    onClick={() => this.handleSubmit()}> Delete Cluster </Button>
+                                                    onClick={() => this.handleDelete()}> Delete Cluster </Button>
+
                                 </div>
                                 </div>
 
@@ -447,10 +563,8 @@ class addCluster extends Component{
                         </CardBody>
                     </Card>
                 </GridItem>
-                {//SECTION DELETE NODE stops
+                {//SECTION DELETE CLUSTER stops
                 }
-
-
             </GridContainer>
             </div>
             </div>
