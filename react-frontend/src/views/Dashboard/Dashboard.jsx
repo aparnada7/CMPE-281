@@ -34,7 +34,6 @@ import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import {nodeURL} from '../../config.js'
-
  
 // import App1 from '../../layouts/GoogleMaps/app.js'
 
@@ -52,6 +51,7 @@ var Chartist = require("chartist");
   
 
 class Dashboard extends React.Component {
+
   state = {
     value: 0,
     //Data to be fetched from MySQL DB into array below.It will store bothe cluster and node data.
@@ -96,7 +96,6 @@ class Dashboard extends React.Component {
         console.log(this.state.data1);
       });
   }
-
 
 //Code start to fetch using API module
 componentWillMount() {

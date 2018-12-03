@@ -152,7 +152,10 @@ class LoginForm extends Component {
 
   render() {
     if (this.state.redirect) return <Redirect to="/register" />;
-    if (this.state.authFlag) return <Redirect to="/dashboard" />;
+    if (this.state.authFlag) return <Redirect to={{
+                pathname: '/dashboard',
+                state: { userType: this.state.usertype }
+              }} />
 
     return (
       <div style={divStyle}>

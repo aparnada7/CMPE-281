@@ -28,70 +28,80 @@ const dashboardRoutes = [
     sidebarName: "Dashboard",
     navbarName: "Material Dashboard",
     icon: Dashboard,
-    component: DashboardPage
+    component: DashboardPage,
+    userType: "User Admin Manager"
   },
   {
     path: "#",
     sidebarName: "User Profile",
     navbarName: "Profile",
     icon: Person,
-    component: UserProfile
+    component: UserProfile,
+    userType: "User Admin Manager"
   },
   {
     path: "/node",
     sidebarName: "View Sensor Data",
     navbarName: "View Sensor Data",
     icon: BubbleChart,
-    component: SensorData
+    component: SensorData,
+    userType: "User Admin Manager"
   },
   {
     path: "/addCluster",
     sidebarName: "Cluster Management",
     navbarName: "Cluster Management",
     icon: BubbleChart,
-    component: TableList
+    component: TableList,
+    userType: "Admin Manager"
   },
   {
     path: "/addNode",
     sidebarName: "Node Management",
     navbarName: "Node Management",
     icon: "wb_cloudy",
-    component: AddNode
+    component: AddNode,
+    userType: "Admin Manager"
   },
   {
     path: "/icons",
     sidebarName: "Sensor Management",
     navbarName: "Sensor Simulation",
     icon: "wb_incandescent",
-    component: Icons
+    component: Icons,
+    userType: "Admin Manager"
   },
   {
     path: "#",
     sidebarName: "View Reports",
     navbarName: "View Reports",
     icon: LibraryBooks,
-    component: Maps
+    component: Maps,
+    userType: "User Admin Manager"
   },
   {
     path: "#",
     sidebarName: "Notifications",
     navbarName: "Notifications",
     icon: Notifications,
-    component: NotificationsPage
+    component: NotificationsPage,
+    userType: "Admin Manager"
   },
   {
     path: "/upgrade-to-pro",
     sidebarName: "LOGOUT",
     navbarName: "LOGOUT",
     icon: "power_settings_new",
-    component: UpgradeToPro
+    component: UpgradeToPro,
+    userType: "User Admin Manager"
   },
   {
         path: "/addSensor",
         sidebarName: "Add Sensor",
         navbarName: "Add Sensor",
         icon: "wb_incandescent",
-        component: AddSensor
+        component: AddSensor,
+        userType: "Admin Manager"
   },
   { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
 ];

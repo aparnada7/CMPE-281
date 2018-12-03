@@ -44,7 +44,7 @@ const Sidebar = ({ ...props }) => {
         return (
           <NavLink
             to={prop.path}
-            className={activePro + classes.item}
+            className={activePro + classes.item +" "+ prop.userType + " " + "all-sidebar-items"}
             activeClassName="active"
             key={key}
           >
@@ -58,7 +58,7 @@ const Sidebar = ({ ...props }) => {
               </ListItemIcon>
               <ListItemText
                 primary={prop.sidebarName}
-                className={classes.itemText + whiteFontClasses}
+                className={classes.itemText + whiteFontClasses }
                 disableTypography={true}
               />
             </ListItem>
