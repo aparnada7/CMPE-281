@@ -63,9 +63,16 @@ const dashboardRoutes = [
     component: AddNode,
     userType: "Admin Manager"
   },
+    {
+        path: "/addSensor",
+        sidebarName: "Sensor Management",
+        navbarName: "Sensor Management",
+        icon: "wb_incandescent",
+        component: AddSensor
+    },
   {
     path: "/icons",
-    sidebarName: "Sensor Management",
+    sidebarName: "Sensor Simulation",
     navbarName: "Sensor Simulation",
     icon: "wb_incandescent",
     component: Icons,
@@ -95,14 +102,7 @@ const dashboardRoutes = [
     component: UpgradeToPro,
     userType: "User Admin Manager"
   },
-  {
-        path: "/addSensor",
-        sidebarName: "Add Sensor",
-        navbarName: "Add Sensor",
-        icon: "wb_incandescent",
-        component: AddSensor,
-        userType: "Admin Manager"
-  },
+
   { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
 ];
 
