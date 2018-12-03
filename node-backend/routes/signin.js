@@ -29,10 +29,10 @@ router.post('/signin',function(req,res){
                     res.end("Could not process query.");
                 }else{
                     if(result.length === 0){
-                        console.log('Invalid credentials.');
+                        console.log('Invalid credentials..');
                         res.writeHead(400, {
-                            "Content-Type": "text/plain"
-                                            });
+                            "Content-Type": 'text/plain'
+                                            })
                         res.end("Invalid credentials");
                     }
                     else{
