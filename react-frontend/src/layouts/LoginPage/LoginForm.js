@@ -137,7 +137,7 @@ class LoginForm extends Component {
       }
     })
     .catch(error => { 
-      if (error.response.status === 400) {
+      if (error.response && error.response.status === 400) {
         this.setState({
           invalidCred: true
         });
