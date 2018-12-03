@@ -58,9 +58,16 @@ const dashboardRoutes = [
     icon: "wb_cloudy",
     component: AddNode
   },
+    {
+        path: "/addSensor",
+        sidebarName: "Sensor Management",
+        navbarName: "Sensor Management",
+        icon: "wb_incandescent",
+        component: AddSensor
+    },
   {
     path: "/icons",
-    sidebarName: "Sensor Management",
+    sidebarName: "Sensor Simulation",
     navbarName: "Sensor Simulation",
     icon: "wb_incandescent",
     component: Icons
@@ -86,13 +93,7 @@ const dashboardRoutes = [
     icon: "power_settings_new",
     component: UpgradeToPro
   },
-  {
-        path: "/addSensor",
-        sidebarName: "Add Sensor",
-        navbarName: "Add Sensor",
-        icon: "wb_incandescent",
-        component: AddSensor
-  },
+
   { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
 ];
 

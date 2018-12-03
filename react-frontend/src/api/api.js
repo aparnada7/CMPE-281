@@ -81,7 +81,8 @@ export const addCluster = (clusterDetails) =>
                             },
                             credentials: 'include',
                             body: JSON.stringify(sensorID)
-                        }).then((res) => res.json())
+                        }
+                        ).then((res) => res.json())
                             .then((data) => {
                                 console.log('API '+data);
                                 return data
@@ -90,7 +91,6 @@ export const addCluster = (clusterDetails) =>
                                 console.log("This is error in searching sensor.");
                                 return error;
                             });
-
 
 
 export const simulateData = (sensorDataFoSimulation) =>
@@ -106,5 +106,44 @@ export const simulateData = (sensorDataFoSimulation) =>
         .then((data) => {return data;})
         .catch(error => {
             console.log("This is error");
+            return error;
+        });
+
+
+export const getSensor = (sensorID) =>
+    fetch(`${api}/getSensor`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(sensorID)
+    }).then((res) => res.json())
+        .then((data) => {
+            console.log('API '+data);
+            return data
+                ;})
+        .catch(error => {
+            console.log("This is error in fetch sensors by id");
+            return error;
+        });
+
+export const deleteSensor = (sensorID) =>
+    fetch(`${api}/deleteSensor`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(sensorID)
+    }).then((res) => res.json())
+        .then((data) => {
+            //console.log('API '+data);
+            return data
+                ;})
+        .catch(error => {
+            console.log("This is error in delete sensors by id");
             return error;
         });
