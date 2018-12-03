@@ -76,26 +76,6 @@ class App extends React.Component {
         });
       });
       // console.log(this.state.data);
-
-    if (this.props.location.state && this.props.location.state.userType) {
-      //console.log("**** success-2, userType received --> "+this.props.location.state.userType);
-      this.state.userType = this.props.location.state.userType;
-
-      //console.log("USER-TYPE from login-page : "+this.state.userType);
-      let allElements = ReactDOM.findDOMNode(this).getElementsByClassName('all-sidebar-items');
-
-      for (var i = 0; i < allElements.length; i++) {
-        //console.log(allElements[i]);
-        allElements[i].style.visibility = "collapse";
-      }
-
-      let userElements = ReactDOM.findDOMNode(this).getElementsByClassName(this.props.location.state.userType);
-
-      for (var i = 0; i < userElements.length; i++) {
-        //console.log(userElements[i]);
-        userElements[i].style.visibility = "visible";
-      }
-    }
   }
   componentDidUpdate(e) {
     if (e.history.location.pathname !== e.location.pathname) {

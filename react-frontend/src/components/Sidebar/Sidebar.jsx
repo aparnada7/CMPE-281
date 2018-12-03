@@ -26,6 +26,12 @@ const Sidebar = ({ ...props }) => {
     <List className={classes.list}>
       {routes.map((prop, key) => {
         if (prop.redirect) return null;
+        let userTypeStorageData = sessionStorage.getItem('userType');
+        if (userTypeStorageData && !prop.userType.includes(userTypeStorageData)) {
+          // If this navigation link is not necessary for this type of user,
+          // do not generate the list item.
+          return null;
+        }
         var activePro = " ";
         var listItemClasses;
         if (prop.path === "/upgrade-to-pro") {

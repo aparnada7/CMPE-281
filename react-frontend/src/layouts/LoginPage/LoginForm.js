@@ -125,6 +125,9 @@ class LoginForm extends Component {
     axios.post(`${nodeURL}/signin`, data).then(response => {
       console.log("Status Code : ", response.status);
       if (response.status === 200) {
+        // store the user session data to session storage.
+        // this will be used during sidebar generation.
+        sessionStorage.setItem('userType', this.state.usertype);
         this.setState({
           authFlag: true
         });
@@ -152,10 +155,7 @@ class LoginForm extends Component {
 
   render() {
     if (this.state.redirect) return <Redirect to="/register" />;
-    if (this.state.authFlag) return <Redirect to={{
-                pathname: '/dashboard',
-                state: { userType: this.state.usertype }
-              }} />
+    if (this.state.authFlag) return <Redirect to="/dashboard" />;
 
     return (
       <div style={divStyle}>
