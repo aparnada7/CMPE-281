@@ -44,15 +44,25 @@ class addNode extends Component {
             sensorType: '',
             createdBy: ''
         },
-        updatesensordata: {
-            usensorID: '',
-            usensor_make: '',
-            usensor_model: '',
-            ulocation: '',
-            ustatus: '',
-
-            usensorType: '',
-            ucreatedBy: ''
+        // updatesensordata: {
+        //     usensorID: '',
+        //     usensor_make: '',
+        //     usensor_model: '',
+        //     ulocation: '',
+        //     ustatus: '',
+        //
+        //     usensorType: '',
+        //     ucreatedBy: ''
+        // },
+        updatenodedata: {
+            unodeID: '',
+            unodelocation: '',
+            unodestatus: ''
+        },
+        delnodedata: {
+            delnodeID: '',
+            delnodelocation: '',
+            delnodestatus: ''
         },
         isFound: false,
         delmessage: '',
@@ -76,7 +86,15 @@ class addNode extends Component {
 
             clusterID :'',
             node_location:'',
-            node_status:''
+            node_status:'',
+
+            unodeID: '',
+            unodelocation: '',
+            unodestatus: '',
+
+            delnodeID: '',
+            delnodelocation: '',
+            delnodestatus: ''
 
 
         });
@@ -131,21 +149,18 @@ class addNode extends Component {
             });
     };
 
-    handleSearch = (sensorID) => {
+    handleSearch = (unodeID) => {
         //alert("Searching ....."+usensorID);
-        let sensorIDJSON = {sensorID: sensorID}
-        API.getSensor(sensorIDJSON)
+        let nodeIDJSON = {nodeID: unodeID}
+        API.getNode(nodeIDJSON)
             .then((res) => {
                 //console.log("status " +[res]);
                 if (res.length > 0) {
                     console.log(' Success')
                     this.setState({
                         isLoggedIn: true,
-                        usensorType: res[0].sensor_type,
-                        usensor_make: res[0].sensor_make,
-                        usensor_model: res[0].sensor_model,
-                        ulocation: res[0].sensor_location,
-                        ustatus: res[0].status,
+                        unodelocation: res[0].node_location,
+                        unodestatus: res[0].status,
                         updatemessage: ''
                     });
                     //console.log("state sensor " +this.state.updatesensordata.usensor_make);
@@ -173,27 +188,27 @@ class addNode extends Component {
     }
 
 
-    handleDelSearch = (sensorID) => {
-        let sensorIDJSON = {sensorID: sensorID}
-        API.getSensor(sensorIDJSON)
+    handleDelSearch = (delnodeID) => {
+        //alert("Searching ....."+usensorID);
+        let nodeIDJSON = {nodeID: delnodeID}
+        API.getNode(nodeIDJSON)
             .then((res) => {
                 //console.log("status " +[res]);
                 if (res.length > 0) {
                     console.log(' Success')
                     this.setState({
                         isLoggedIn: true,
-                        sensor_type: res[0].sensor_type,
-                        sensor_make: res[0].sensor_make,
-                        sensor_model: res[0].sensor_model,
-                        sensor_location: res[0].sensor_location,
-                        status: res[0].status,
+                        delnodelocation: res[0].node_location,
+                        delnodestatus: res[0].status,
                         delmessage: ''
                     });
+                    //console.log("state sensor " +this.state.updatesensordata.usensor_make);
+                    //this.props.history.push('/addSensor');
                 } else if (res.status === '401') {
                     console.log("No node with the given ID found");
                     this.setState({
                         isLoggedIn: true,
-                        delmessage: "No node with the given ID found..!!",
+                        message: "No node with the given ID found..!!",
                     });
                 } else if (res.status === '402') {
                     this.setState({
@@ -203,27 +218,26 @@ class addNode extends Component {
                     this.props.history.push('/login');
                 } else {
                     this.setState({
-                        delmessage: "No Node with the given ID found!!",
+                        delmessage: "No node with the given ID found!!",
                     });
                 }
             });
+
+
     }
 
 
     handleUpdate = (updateData) => {
-        //console.log('Updated Data ', updateData)
-        API.updateSensor(updateData)
+        console.log('Updated Data: ', updateData)
+        API.updateNode(updateData)
             .then((res) => {
                 if (res.length > 0) {
-                    console.log(' Success in delete ')
+                    console.log(' Success in update ')
                     this.setState({
-                        usensorType: '',
-                        usensor_make: '',
-                        usensor_model: '',
-                        ulocation: '',
-                        ustatus: '',
-                        usensorID: '',
-                        updatemessage: 'Selected node Updated!!'
+                        unodelocation: '',
+                        unodestatus: '',
+                        unodeID: '',
+                        updatemessage: 'Selected node updated!!'
                     });
                     //console.log("state sensor " +this.state.updatesensordata.usensor_make);
                     //this.props.history.push('/addSensor');
@@ -239,19 +253,19 @@ class addNode extends Component {
     }
 
 
-    handleDelete = (sensorID) => {
-        let sensorIDJSON = {sensorID: sensorID}
-        API.deleteSensor(sensorIDJSON)
+    handleDelete = (delnodeID) => {
+        let delnodeIDJSON = {delnodeID: delnodeID}
+        console.log("Delete id :", delnodeIDJSON.delnodeID)
+        API.deleteNode(delnodeIDJSON.delnodeID)
             .then((res) => {
                 if (res.length > 0) {
                     console.log(' Success in delete ')
                     this.setState({
-                        sensor_make: '',
-                        sensor_model: '',
-                        sensor_location: '',
-                        status: '',
-                        sensorID: '',
-                        updatemessage: 'Below node deleted!!'
+
+                        delnodelocation: '',
+                        delnodestatus: '',
+                        delnodeID: '',
+                        delmessage: 'Below node deleted!!'
                     });
                     //console.log("state sensor " +this.state.updatesensordata.usensor_make);
                     //this.props.history.push('/addSensor');
@@ -259,7 +273,7 @@ class addNode extends Component {
                     console.log("No Node with the given ID found");
                     this.setState({
                         isLoggedIn: true,
-                        message: "No node with the given ID found..!!",
+                        delmessage: "No node with the given ID found..!!",
                     });
                 }
             });
@@ -442,26 +456,26 @@ class addNode extends Component {
                                         {/*</div>*/}
                                     </div>
                                     <div className="dropdown">
-                                    Search by Node ID: <input type="text" className="form-control" placeholder="Node ID" value={this.state.updatesensordata.usensorID}
+                                    Search by Node ID: <input type="text" className="form-control" placeholder="Node ID" value={this.state.updatenodedata.unodeID}
                                                     onChange={(event) => {
                                                         this.setState({
-                                                            updatesensordata: {
-                                                                ...this.state.updatesensordata,
-                                                                usensorID: event.target.value
+                                                            updatenodedata: {
+                                                                ...this.state.updatenodedata,
+                                                                unodeID: event.target.value
                                                             }
                                                         });
                                                     }}/><br/>
                                                     <Button bsStyle="info" bsSize="sm" block
-                                                        onClick={() => this.handleSearch(this.state.updatesensordata.usensorID)}> Search Node </Button>
+                                                        onClick={() => this.handleSearch(this.state.updatenodedata.unodeID)}> Search Node </Button>
                                                     <hr/>
 
 
-                                        Update Node Location: <input type="text" className="form-control" placeholder="Node Location" defaultValue={this.state.ulocation}
+                                        Update Node Location: <input type="text" className="form-control" placeholder="Node Location" defaultValue={this.state.unodelocation}
                                                         onChange={(event) => {
                                                             this.setState({
-                                                                updatesensordata: {
-                                                                    ...this.state.updatesensordata,
-                                                                    ulocation: event.target.value
+                                                                updatenodedata: {
+                                                                    ...this.state.updatenodedata,
+                                                                    unodelocation: event.target.value
                                                                 }
                                                             });
                                                         }}/><br/>
@@ -469,12 +483,12 @@ class addNode extends Component {
 
 
 
-                                      Update Node Status : <select id="ddlNode" className="form-control input-lg" defaultValue={this.state.ustatus}
+                                      Update Node Status : <select id="ddlNode" className="form-control input-lg" defaultValue={this.state.unodestatus}
                                                                      onChange={(event) => {
                                                                          this.setState({
-                                                                             updatesensordata: {
-                                                                                 ...this.state.updatesensordata,
-                                                                                 ustatus: event.target.value
+                                                                             updatenodedata: {
+                                                                                 ...this.state.updatenodedata,
+                                                                                 unodestatus: event.target.value
                                                                              }
                                                                          });
                                                                      }} >
@@ -489,7 +503,7 @@ class addNode extends Component {
 
 
                                             <Button bsStyle="primary" bsSize="sm" block
-                                                onClick={() => this.handleUpdate(this.state.updatesensordata)}> Update Node </Button>
+                                                onClick={() => this.handleUpdate(this.state.updatenodedata)}> Update Node </Button>
 
                                 </div>
                                 </div>
@@ -530,39 +544,39 @@ class addNode extends Component {
                                     <div className="dropdown">
 
 
-                                    Search by Node ID: <input type="text" className="form-control" placeholder="Enter Node ID" value={this.state.sensordata.sensorID}
+                                    Search by Node ID: <input type="text" className="form-control" placeholder="Enter Node ID" value={this.state.delnodedata.delnodeID}
                                                     onChange={(event) => {
                                                         this.setState({
-                                                            sensordata: {
-                                                                ...this.state.sensordata,
-                                                                sensorID: event.target.value
+                                                            delnodedata: {
+                                                                ...this.state.delnodedata,
+                                                                delnodeID: event.target.value
                                                             }
                                                         });
                                                     }}/><br/>
                                                     <Button bsStyle="info" bsSize="sm" block
-                                                        onClick={() => this.handleDelSearch(this.state.sensordata.sensorID)}> Search Node</Button>
+                                                        onClick={() => this.handleDelSearch(this.state.delnodedata.delnodeID)}> Search Node</Button>
                                                     <hr/>
 
 
 
-                                  Node Location: <input type="text" className="form-control" readonly="readonly" placeholder="Node Location" value={this.state.sensor_location}
+                                  Node Location: <input type="text" className="form-control" readonly="readonly" placeholder="Node Location" value={this.state.delnodelocation}
                                                           onChange={(event) => {
                                                               this.setState({
-                                                                  sensordata: {
-                                                                      ...this.state.sensordata,
-                                                                      sensor_model: event.target.value
+                                                                  delnodedata: {
+                                                                      ...this.state.delnodedata,
+                                                                      delnodelocation: event.target.value
                                                                   }
                                                               });
 
 
                                                           }}/><br/>
 
-                                   Node Status: <input type="text" className="form-control" readonly="readonly" placeholder="Node Status" value={this.state.status}
+                                   Node Status: <input type="text" className="form-control" readonly="readonly" placeholder="Node Status" value={this.state.delnodestatus}
                                                   onChange={(event) => {
                                                       this.setState({
-                                                          sensordata: {
-                                                              ...this.state.sensordata,
-                                                              sensor_model: event.target.value
+                                                          delnodedata: {
+                                                              ...this.state.delnodedata,
+                                                              delnodestatus: event.target.value
                                                           }
                                                       });
 
@@ -571,7 +585,7 @@ class addNode extends Component {
 
 
                                                 <Button bsStyle="danger" bsSize="sm" block
-                                                    onClick={() => this.handleDelete()}> Delete Node </Button>
+                                                    onClick={() => this.handleDelete(this.state.delnodedata)}> Delete Node </Button>
 
                                 </div>
                                 </div>
