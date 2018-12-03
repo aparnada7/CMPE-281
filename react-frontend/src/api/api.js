@@ -81,8 +81,7 @@ export const addCluster = (clusterDetails) =>
                             },
                             credentials: 'include',
                             body: JSON.stringify(sensorID)
-                        }
-                        ).then((res) => res.json())
+                        }).then((res) => res.json())
                             .then((data) => {
                                 console.log('API '+data);
                                 return data
@@ -91,6 +90,7 @@ export const addCluster = (clusterDetails) =>
                                 console.log("This is error in searching sensor.");
                                 return error;
                             });
+
 
 
 export const simulateData = (sensorDataFoSimulation) =>
@@ -145,5 +145,27 @@ export const deleteSensor = (sensorID) =>
                 ;})
         .catch(error => {
             console.log("This is error in delete sensors by id");
+            return error;
+        });
+
+
+
+
+export const updateSensor = (sensorData) =>
+    fetch(`${api}/updateSensor`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(sensorData)
+    }).then((res) => res.json())
+        .then((data) => {
+            //console.log('API '+data);
+            return data
+                ;})
+        .catch(error => {
+            console.log("This is error in Update sensors by id");
             return error;
         });

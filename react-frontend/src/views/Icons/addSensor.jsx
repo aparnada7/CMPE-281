@@ -23,14 +23,14 @@ import dashboardRoutes from "routes/dashboard.jsx";
 import iconsStyle from "assets/jss/material-dashboard-react/views/iconsStyle.jsx";
 let divStyle1 = {align: 'center', backgroundColor: '#FEFDFD', padding: '28px', marginTop: '1px'};
 var data = [];
-class addSensor extends Component{
+class addSensor extends Component {
     constructor(props) {
         super(props);
     }
 
     state = {
         sensordata: {
-            sensorID:'',
+            sensorID: '',
             sensor_make: '',
             sensor_model: '',
             location: '',
@@ -40,7 +40,7 @@ class addSensor extends Component{
             createdBy: ''
         },
         updatesensordata: {
-            usensorID:'',
+            usensorID: '',
             usensor_make: '',
             usensor_model: '',
             ulocation: '',
@@ -50,25 +50,24 @@ class addSensor extends Component{
             ucreatedBy: ''
         },
         isFound: false,
-        delmessage:'',
-        updatemessage:''
+        delmessage: '',
+        updatemessage: ''
 
     };
 
     componentWillMount() {
         this.setState({
-            sensorID:'',
+            sensorID: '',
             sensor_make: '',
             sensor_model: '',
-            location:'',
-            status:'',
-            nodeId:'',
+            location: '',
+            status: '',
+            nodeId: '',
             sensorType: '',
             createdBy: '',
 
-            delmessage:'',
-            updatemessage:'',
-
+            delmessage: '',
+            updatemessage: '',
 
 
         });
@@ -122,96 +121,62 @@ class addSensor extends Component{
     };
 
     handleSearch = (sensorID) => {
-      //alert("Searching ....."+usensorID);
-        let sensorIDJSON = { sensorID: sensorID}
-      API.getSensor(sensorIDJSON)
-          .then((res) => {
-              //console.log("status " +[res]);
-              if (res.length >0) {
-                  console.log(' Success')
-                  this.setState({
-                      isLoggedIn: true,
-                      usensorType : res[0].sensor_type,
-                      usensor_make : res[0].sensor_make,
-                      usensor_model : res[0].sensor_model,
-                      ulocation : res[0].sensor_location,
-                      ustatus : res[0].status,
-                      updatemessage : ''
-                  });
-                  //console.log("state sensor " +this.state.updatesensordata.usensor_make);
-                  //this.props.history.push('/addSensor');
-              } else if (res.status === '401') {
-                  console.log("No Sensor with the given ID found");
-                  this.setState({
-                      isLoggedIn: true,
-                      message: "No with the given ID found..!!",
-                  });
-              } else if (res.status === '402') {
-                  this.setState({
-                      isLoggedIn: false,
-                      message: "Session Expired..!!",
-                  });
-                  this.props.history.push('/login');
-              }else{
-                  this.setState({
-                      updatemessage: "No Sensor with the given ID found!!",
-                  });
-              }
-
-          });
-
-      //console.log('Update ID: ', this.state.updatesensordata.usensorID)
-      // console.log("Particular data: ", )
-      // for(let i = 0; i < data.length; i++){
-      //   if(data[i].id_sensor_master_pk == usensorID){
-      //     // this.usensor_make = data[i].sensor_make
-      //     // this.usensor_type = data[i].sensor_type
-      //     // this.ulocation = data[i].sensor_location
-      //     // this.usensor_model = data[i].sensor_model
-      //     // this.ustatus = data[i].status
-      //
-      //     this.setState({usensorType : data[i].sensor_type})
-      //     this.setState({usensor_make : data[i].sensor_make})
-      //     this.setState({usensor_model : data[i].sensor_model})
-      //     this.setState({ulocation : data[i].sensor_location})
-      //     this.setState({ustatus : data[i].status})
-      //
-      //     console.log("FOUNDDDDDDDDDDDDDDD")
-      //     console.log("UMake : ", this.usensor_make)
-      //     console.log("UType : ", this.usensorType)
-      //     console.log("ULocation : ", this.ulocation)
-      //     console.log("UModel : ", this.usensor_model)
-      //     console.log("UStatus : ", this.ustatus)
-      //     // this.state.sensordata.sensor_make = this.sensor_make;
-      //     // console.log("FOUNDDDDDDDDDDDDDDD : ", this.state.sensordata.sensor_make)
-      //   }
-      //   else if( i < data.length){
-      //     console.log("searching")
-      //     // alert("SEnsor ID ", sensorID, " not found. Please try other ID.")
-      //
-      //   }
-        // else if(i == data.length-1){
-        //   console.log("NOT FOUND SORRY")
-        //
-        // }
-
-    }
-
-    handleDelSearch = (sensorID) => {
-        let sensorIDJSON = { sensorID: sensorID}
+        //alert("Searching ....."+usensorID);
+        let sensorIDJSON = {sensorID: sensorID}
         API.getSensor(sensorIDJSON)
             .then((res) => {
                 //console.log("status " +[res]);
-                if (res.length >0) {
+                if (res.length > 0) {
                     console.log(' Success')
                     this.setState({
                         isLoggedIn: true,
-                        sensor_type : res[0].sensor_type,
-                        sensor_make : res[0].sensor_make,
-                        sensor_model : res[0].sensor_model,
-                        sensor_location : res[0].sensor_location,
-                        status : res[0].status,
-                        delmessage : ''
+                        usensorType: res[0].sensor_type,
+                        usensor_make: res[0].sensor_make,
+                        usensor_model: res[0].sensor_model,
+                        ulocation: res[0].sensor_location,
+                        ustatus: res[0].status,
+                        updatemessage: ''
+                    });
+                    //console.log("state sensor " +this.state.updatesensordata.usensor_make);
+                    //this.props.history.push('/addSensor');
+                } else if (res.status === '401') {
+                    console.log("No Sensor with the given ID found");
+                    this.setState({
+                        isLoggedIn: true,
+                        message: "No with the given ID found..!!",
+                    });
+                } else if (res.status === '402') {
+                    this.setState({
+                        isLoggedIn: false,
+                        message: "Session Expired..!!",
+                    });
+                    this.props.history.push('/login');
+                } else {
+                    this.setState({
+                        updatemessage: "No Sensor with the given ID found!!",
+                    });
+                }
+            });
+
+
+    }
+
+
+    handleDelSearch = (sensorID) => {
+        let sensorIDJSON = {sensorID: sensorID}
+        API.getSensor(sensorIDJSON)
+            .then((res) => {
+                //console.log("status " +[res]);
+                if (res.length > 0) {
+                    console.log(' Success')
+                    this.setState({
+                        isLoggedIn: true,
+                        sensor_type: res[0].sensor_type,
+                        sensor_make: res[0].sensor_make,
+                        sensor_model: res[0].sensor_model,
+                        sensor_location: res[0].sensor_location,
+                        status: res[0].status,
+                        delmessage: ''
                     });
                 } else if (res.status === '401') {
                     console.log("No Sensor with the given ID found");
@@ -225,41 +190,57 @@ class addSensor extends Component{
                         message: "Session Expired..!!",
                     });
                     this.props.history.push('/login');
-                }else{
+                } else {
                     this.setState({
                         delmessage: "No Sensor with the given ID found!!",
                     });
                 }
             });
-      }
+    }
 
 
     handleUpdate = (updateData) => {
-      console.log('Updated Data ', updateData)
-
-      // this.setState({updatemessage : 'Below sensor updated!!'})
-      // this.setState({usensorType : ''})
-      // this.setState({usensor_make : ''})
-      // this.setState({usensor_model : ''})
-      // this.setState({ulocation : ''})
-      // this.setState({ustatus : ''})
-      // this.setState({usensorID : ''})
+        //console.log('Updated Data ', updateData)
+        API.updateSensor(updateData)
+            .then((res) => {
+                if (res.length > 0) {
+                    console.log(' Success in delete ')
+                    this.setState({
+                        usensorType: '',
+                        usensor_make: '',
+                        usensor_model: '',
+                        ulocation: '',
+                        ustatus: '',
+                        usensorID: '',
+                        updatemessage: 'Selected Sensor Updated!!'
+                    });
+                    //console.log("state sensor " +this.state.updatesensordata.usensor_make);
+                    //this.props.history.push('/addSensor');
+                } else if (res.status === '401') {
+                    console.log("No Sensor with the given ID found");
+                    this.setState({
+                        isLoggedIn: true,
+                        message: "No with the given ID found..!!",
+                    });
+                }
+            });
 
     }
 
+
     handleDelete = (sensorID) => {
-        let sensorIDJSON = { sensorID: sensorID}
+        let sensorIDJSON = {sensorID: sensorID}
         API.deleteSensor(sensorIDJSON)
             .then((res) => {
                 if (res.length > 0) {
                     console.log(' Success in delete ')
                     this.setState({
-                        sensor_make : '',
-                        sensor_model : '',
-                        sensor_location : '',
-                        status : '',
-                        sensorID : '',
-                        delmessage : 'Below sensor deleted!!'
+                        sensor_make: '',
+                        sensor_model: '',
+                        sensor_location: '',
+                        status: '',
+                        sensorID: '',
+                        updatemessage: 'Below sensor deleted!!'
                     });
                     //console.log("state sensor " +this.state.updatesensordata.usensor_make);
                     //this.props.history.push('/addSensor');
@@ -276,7 +257,6 @@ class addSensor extends Component{
     // componentDidUpdate(){
     //   console.multerConfig
     // }
-
     render() {
         const {classes, ...rest} = this.props;
         return (
@@ -403,6 +383,8 @@ class addSensor extends Component{
                                         <option value="Active" >Active</option>
                                         <option value="InActive" >InActive</option>
                                         <option value="Turn On" >Turn On</option>
+                                        <option value="Turn On" >Turn Off</option>
+                                        <option value="Turn On" >Maintenance</option>
                                     </select> &nbsp; &nbsp; <br/>
 
 
@@ -458,7 +440,7 @@ class addSensor extends Component{
                                                         onClick={() => this.handleSearch(this.state.updatesensordata.usensorID)}> Search </Button>
                                                     <hr/>
 
-                                      Sensor Type: <input type="text" className="form-control" placeholder="Sensor Type" value={this.state.usensorType}
+                                      Sensor Type: <input type="text" className="form-control" placeholder="Sensor Type" defaultValue={this.state.usensorType}
                                                                     onChange={(event) => {
                                                                         this.setState({
                                                                             updatesensordata: {
@@ -471,7 +453,7 @@ class addSensor extends Component{
 
 
 
-                                        Update Location: <input type="text" className="form-control" placeholder="Enter Sensor Location" value={this.state.ulocation}
+                                        Update Location: <input type="text" className="form-control" placeholder="Enter Sensor Location" defaultValue={this.state.ulocation}
                                                         onChange={(event) => {
                                                             this.setState({
                                                                 updatesensordata: {
@@ -490,8 +472,8 @@ class addSensor extends Component{
                                                        usensor_make: event.target.value
                                                    }
                                                });
-                                           }} value={this.state.usensor_make}/> <br/>
-                                    Update Sensor Model: <input type="text" className="form-control" placeholder="Enter Sensor Model" value={this.state.usensor_model}
+                                           }} defaultValue={this.state.usensor_make}/> <br/>
+                                    Update Sensor Model: <input type="text" className="form-control" placeholder="Enter Sensor Model" defaultValue={this.state.usensor_model}
                                            onChange={(event) => {
                                                this.setState({
                                                    updatesensordata: {
@@ -503,7 +485,7 @@ class addSensor extends Component{
 
                                            }}/><br/>
 
-                                      Update Status : <select id="ddlNode" className="form-control input-lg" value={this.state.ustatus}
+                                      Update Status : <select id="ddlNode" className="form-control input-lg" defaultValue={this.state.ustatus}
                                                                      onChange={(event) => {
                                                                          this.setState({
                                                                              updatesensordata: {
@@ -515,6 +497,8 @@ class addSensor extends Component{
                                         <option value="Active" >Active</option>
                                         <option value="InActive" >InActive</option>
                                         <option value="Turn On" >Turn On</option>
+                                        <option value="Turn On" >Turn Off</option>
+                                        <option value="Turn On" >Maintenance</option>
                                     </select> &nbsp; &nbsp; <br/>
 
 
@@ -576,6 +560,7 @@ class addSensor extends Component{
 
                                     Sensor Type: <input type="text" id="sensorDelType" className="form-control" readonly="readonly" placeholder="Sensor Type"
                                     value={this.state.sensor_type}
+
                                            onChange={(event) => {
                                                this.setState({
                                                    sensordata: {
@@ -631,7 +616,7 @@ class addSensor extends Component{
 
 
                                                 <Button bsStyle="danger" bsSize="sm" block
-                                                    onClick={() => this.handleDelete(this.state.sensordata.sensorID)}> Delete Sensor </Button>
+                                                    onClick={() => this.handleDelete()}> Delete Sensor </Button>
 
                                 </div>
                                 </div>
