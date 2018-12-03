@@ -50,7 +50,8 @@ export const fetchSensorData = () =>
               credentials: 'include',
               body: JSON.stringify(nodeDetails)
           }).then((res) => res.json())
-              .then((data) => {return data;})
+              .then((data) => {return data;
+              console.log("-----add Node api called here.-----")})
               .catch(error => {
                   console.log("This is error");
                   return error;
