@@ -6,14 +6,14 @@ var pool = require('../db/pool')
 router.post('/updateNode',function(req,res){
 
     console.log("Inside update node by id Request", req.body.unodeID);
-    let unodelocation = req.body.unodelocation
+    // let unodelocation = req.body.unodelocation
     let unodestatus = req.body.unodestatus
     let unodeID = parseInt(req.body.unodeID)
 
-    console.log("node location: ", unodelocation)
+    // console.log("node location: ", unodelocation)
 
-    var sql = "UPDATE node_master SET node_location = ? ,status = ?  where id_node_master = ?";
-    var params = [unodelocation,unodestatus, unodeID ]
+    var sql = "UPDATE node_master SET status = ?  where id_node_master = ?";
+    var params = [unodestatus, unodeID ]
 
     console.log(sql)
     pool.getConnection(function(err,con){
