@@ -55,6 +55,7 @@ class addCluster extends Component {
         },
         isFound: false,
         delmessage: '',
+        delmessage2: '',
         updatemessage: ''
 
     };
@@ -71,6 +72,7 @@ class addCluster extends Component {
             createdBy: '',
 
             delmessage: '',
+            delmessage2: '',
             updatemessage: '',
 
             cluster_location:'',
@@ -171,7 +173,8 @@ handleSearch = (clusterID) => {
                             isLoggedIn: true,
                             delclusterlocation: res[0].cluster_location,
                             delclusterstatus: res[0].status,
-                            delmessage: ''
+                            delmessage: '',
+
                         });
                         console.log("del state  " +this.state.delclusterstatus);
                         console.log("del state  " +this.state.delclusterlocation);
@@ -250,7 +253,8 @@ handleSearch = (clusterID) => {
 
     handleDelete = () => {
       this.setState({
-        delmessage : "Cluster cannot be deleted!"
+        delmessage : 'Cluster has dependent active nodes.',
+        delmessage2: 'Cluster cannot be deleted!'
       });
 
     }
@@ -502,7 +506,8 @@ handleSearch = (clusterID) => {
                                         {/*<div className="col-md-3">*/}
                                         {this.state.delmessage && (
                                             <div className="alert alert-warning" role="alert">
-                                                {this.state.delmessage}
+                                                {this.state.delmessage}<br/>
+                                                {this.state.delmessage2}
                                             </div>
                                         )}
                                         {/*</div>*/}
