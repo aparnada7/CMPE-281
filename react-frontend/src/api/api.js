@@ -57,6 +57,8 @@ export const fetchSensorData = () =>
                   return error;
               });
 
+
+
 export const addCluster = (clusterDetails) =>
                 fetch(`${api}/addCluster`, {
                     method: 'POST',
@@ -149,7 +151,7 @@ export const getNode = (nodeID) =>
                     return error;
                 });
 
-  export const getCluster = (clusterID) =>
+  export const getCluster = (uclusterID) =>
                             fetch(`${api}/getCluster`, {
                                 method: 'POST',
                                 headers: {
@@ -157,17 +159,35 @@ export const getNode = (nodeID) =>
                                     'Content-Type': 'application/json'
                                 },
                                 credentials: 'include',
-                                body: JSON.stringify(clusterID)
+                                body: JSON.stringify(uclusterID)
                             }).then((res) => res.json())
                                 .then((data) => {
                                     console.log('Search cluster API '+data);
                                     return data
                                         ;})
                                 .catch(error => {
-                                    console.log("This is error in fetch cluster by id");
+                                    console.log("This is error in fetch cluster by id for  ID: ", uclusterID);
                                     return error;
                                 });
 
+export const getDelCluster = (delclusterID) =>
+                          fetch(`${api}/getDelCluster`, {
+                              method: 'POST',
+                              headers: {
+                                  ...headers,
+                                  'Content-Type': 'application/json'
+                              },
+                              credentials: 'include',
+                              body: JSON.stringify(delclusterID)
+                          }).then((res) => res.json())
+                              .then((data) => {
+                                  console.log('Search cluster API '+data);
+                                  return data
+                                      ;})
+                              .catch(error => {
+                                  console.log("This is error in fetch cluster by id for  ID: ", delclusterID);
+                                  return error;
+                              });
 
 export const deleteSensor = (sensorID) =>
     fetch(`${api}/deleteSensor`, {
@@ -243,5 +263,24 @@ export const updateNode = (updateData) =>
                         ;})
                 .catch(error => {
                     console.log("This is error in Update node by id : ", updateData);
+                    return error;
+                });
+
+export const updateCluster = (updateClusterData) =>
+            fetch(`${api}/updateCluster`, {
+                method: 'POST',
+                headers: {
+                    ...headers,
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify(updateClusterData)
+            }).then((res) => res.json())
+                .then((data) => {
+                    //console.log('API '+data);
+                    return data
+                        ;})
+                .catch(error => {
+                    console.log("This is error in Update cluster by id : ", updateClusterData);
                     return error;
                 });
