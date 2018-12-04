@@ -26,8 +26,18 @@ pool.getConnection(function(err,con){
                         'Content-Type' : 'text/plain'
                     })
                     res.end("Could not process query.");
+                    
                 }else{
+                    // console.log('in if')
                         console.log(result)
+                        if(result.length === 0){
+                            // console.log('in if')
+                            res.writeHead(400,{
+                        'Content-Type' : 'text/plain'
+                    })
+                    res.end("Bad query.");
+                            return
+                        }
                       id_node_master = result[0].id_node_master
                       console.log(id_node_master)
 
@@ -42,23 +52,23 @@ pool.getConnection(function(err,con){
         avgtemp = Math.floor(avgtemp/result.data.length)
         result.data.sort((a, b) => a.temperature - b.temperature)
         // console.log(result.data)
-        lowesttemp = result.data[0].temperature
+        lowesttemp = Math.floor(result.data[0].temperature)
         console.log(lowesttemp)
-        highesttemp = result.data[result.data.length - 1].temperature
+        highesttemp = Math.floor(result.data[result.data.length - 1].temperature)
 
         avghumidity = result.data.reduce((acc, ele)=>{return acc + ele.humidity }, 0)
         avghumidity = Math.floor(avghumidity/result.data.length)
         result.data.sort((a, b) => a.humidity - b.humidity)
         // console.log(result.data)
-        lowesthumidity = result.data[0].humidity
-        highesthumidity = result.data[result.data.length - 1].humidity
+        lowesthumidity = Math.floor(result.data[0].humidity)
+        highesthumidity = Math.floor(result.data[result.data.length - 1].humidity)
 
         avglight = result.data.reduce((acc, ele)=>{return acc + ele.light }, 0)
         avglight = Math.floor(avglight/result.data.length) 
         result.data.sort((a, b) => a.light - b.light)
         console.log(result.data)
-        lowestlight = result.data[0].light
-        highestlight = result.data[result.data.length - 1].light
+        lowestlight = Math.floor(result.data[0].light)
+        highestlight = Math.floor(result.data[result.data.length - 1].light)
 
         avgpollution = result.data.reduce((acc, ele)=>{return acc + ele.pollution }, 0)
         avgpollution = Math.floor(avgpollution/result.data.length)

@@ -1,7 +1,7 @@
 var axios = require("axios");
 
 setInterval(function sendData(){
-  console.log('hello');
+  console.log('Sending data');
     const data = {temperature: Math.floor(Math.random()*100), //units: F
                   humidity: Math.floor(Math.random()*100),  //units: % rel humidity
                   light: Math.floor(Math.random()*1000),  //units: lux
@@ -15,4 +15,4 @@ setInterval(function sendData(){
     // })
       // console.log("Status Code : ", response.status);
       // console.log(response.data.results);
-}, 3000)
+}, 10)

@@ -49,7 +49,7 @@ export class App1 extends Component {
       >
       
         <Marker onClick={this.onMarkerClick}
-                name={'North 1st Street, San Jose, CA, USA'}
+                name={"North 1st Street, San Jose, CA, USA"}
                 position={{lat: 37.38433270000001, lng: -121.92664809999997}}  
                  />
 
@@ -59,19 +59,29 @@ export class App1 extends Component {
                  />         
 
         <Marker onClick={this.onMarkerClick}
-                name={'North 3rd Street, San Jose, CA, USA'}
-                position={{lat: 37.3479568, lng: -121.89649280000003}}  
+                name={'North 6th Street, San Jose, CA, USA'}
+                position={{lat: 37.349486, lng: -121.8933078}}  
                  /> 
 
         <Marker onClick={this.onMarkerClick}
-                name={'North 4th Street, San Jose, CA, USA'}
-                position={{lat: 37.3544538, lng: -121.89991839999999}}  
+                name={'North 8th Street, San Jose, CA, USA'}
+                position={{lat: 37.34906489999999, lng: -121.89011349999998}}  
                  />  
         
         <Marker onClick={this.onMarkerClick}
                 name={'North 5th Street, San Jose, CA, USA'}
                 position={{lat: 37.3495538, lng: -121.89479470000003}}  
                  /> 
+
+                 <Marker onClick={this.onMarkerClick}
+                name={'1st Street, San Francisco, CA, USA'}
+                position={{lat: 37.7881209, lng: -122.39549579999999}}  
+                 /> 
+
+                 <Marker onClick={this.onMarkerClick}
+                name={'Downtown, San Francisco, CA, USA'}
+                position={{lat: 37.7945742, lng: -122.3999445}}  
+                 />
 
         <InfoWindow
           marker={this.state.activeMarker}
