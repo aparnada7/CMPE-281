@@ -21,6 +21,7 @@ import AddSensor from "../views/Icons/addSensor"
 import AddNode from "../views/Icons/addNode"
 import AddCluster from "../views/TableList/addCluster"
 import SensorData from "../views/SensorData/sensorData"
+import ViewReports from "../views/ViewReports/viewReports"
 
 const dashboardRoutes = [
   {
@@ -80,11 +81,11 @@ const dashboardRoutes = [
     userType: "Admin Manager"
   },
   {
-    path: "#",
+    path: "/viewReports",
     sidebarName: "View Reports",
     navbarName: "View Reports",
     icon: LibraryBooks,
-    component: Maps,
+    component: ViewReports,
     userType: "User Admin Manager"
   },
   {
