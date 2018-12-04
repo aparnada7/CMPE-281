@@ -3,19 +3,23 @@ var router = express.Router();
 var pool = require('../db/pool')
 
 
-router.post('/updateNode',function(req,res){
+// console.log("__________________________________________")
+// console.log("Before route.post(/updateCluster)")
 
-    console.log("Inside update node by id Request", req.body.unodeID);
-    // let unodelocation = req.body.unodelocation
-    let unodestatus = req.body.unodestatus
-    let unodeID = parseInt(req.body.unodeID)
+router.post('/updateCluster',function(req,res){
 
-    // console.log("node location: ", unodelocation)
+    console.log("Inside update cluster!!!", req.body.uclusterID);
+    console.log("Inside update cluster!!!", req.body.uclusterstatus);
+    // let uclusterlocation = req.body.uclusterlocation
+    let uclusterstatus = req.body.uclusterstatus
+    let uclusterID = parseInt(req.body.uclusterID)
 
-    var sql = "UPDATE node_master SET status = ?  where id_node_master = ?";
-    var params = [unodestatus, unodeID ]
+    // console.log("node location: ", uclusterlocation)
 
-    console.log(sql)
+    var sql = "UPDATE cluster_master SET status = ?  where id_cluster_master_pk = ?";
+    var params = [uclusterstatus, uclusterID ]
+
+    console.log("Query is : ", sql)
     pool.getConnection(function(err,con){
         if(err){
             res.writeHead(400,{
@@ -35,7 +39,7 @@ router.post('/updateNode',function(req,res){
                         res.writeHead(400, {
                             "Content-Type": "text/plain"
                         });
-                        res.end("No Nodes");
+                        res.end("No Clusters");
                     }
                     else{
                         if(result.affectedRows >= 1){
@@ -48,7 +52,7 @@ router.post('/updateNode',function(req,res){
                         console.log(JSON.stringify(result))
                         res.end(JSON.stringify(result))
                         //res.status(201).json({ status: '201', result: JSON.stringify(result)});
-                        console.log("Successfully updated node data");
+                        console.log("Successfully updated cluster data!!!");
                     }
                 }
             });

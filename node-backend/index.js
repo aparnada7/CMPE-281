@@ -41,6 +41,9 @@ const addCluster = require('./routes/addCluster')
 const getNode = require('./routes/getNode')
 const updateNode = require('./routes/updateNode')
 const deleteNode = require('./routes/deleteNode')
+const getCluster = require('./routes/getCluster')
+const updateCluster = require('./routes/updateCluster')
+const getDelCluster = require('./routes/getDelCluster')
 
 //use cors to allow cross origin resource sharing
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
@@ -100,6 +103,9 @@ app.post('/addCluster', addCluster)
 app.post('/getNode', getNode)
 app.post('/updateNode', updateNode)
 app.post('/deleteNode', deleteNode)
+app.post('/getCluster', getCluster)
+app.post('/updateCluster', updateCluster)
+app.post('/getDelCluster', getDelCluster)
 
 app.listen(3001);
 console.log("Server Listening on port 3001");

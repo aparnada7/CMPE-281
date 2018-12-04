@@ -2,9 +2,9 @@
 var express = require('express');
 var router = express.Router();
 var pool = require('../db/pool')
-
-console.log("__________________________________________")
-console.log("Before route.post(/addNode)")
+//
+// console.log("__________________________________________")
+// console.log("Before route.post(/addNode)")
 
 router.post('/addNode',function(req,res){
 
@@ -22,8 +22,8 @@ router.post('/addNode',function(req,res){
     // var createdBy = req.body.createdBy
     // var reqDate = Date.now();
     // var cluster_fk = 120021;
-    console.log("__________________________________________")
-    console.log("Inside add node backend API CALL, before insert.")
+    // console.log("__________________________________________")
+    // console.log("Inside add node backend API CALL, before insert.")
 
     var addNode = "insert into node_master" +
         "(`node_location`,`cluster_node_id_fk`,`status`,`createdBy`) values " +

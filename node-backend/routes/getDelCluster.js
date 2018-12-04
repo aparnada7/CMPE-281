@@ -3,18 +3,12 @@ var router = express.Router();
 var pool = require('../db/pool')
 
 
-router.post('/updateNode',function(req,res){
+router.post('/getDelCluster',function(req,res){
 
-    console.log("Inside update node by id Request", req.body.unodeID);
-    // let unodelocation = req.body.unodelocation
-    let unodestatus = req.body.unodestatus
-    let unodeID = parseInt(req.body.unodeID)
+    console.log("Inside get cluster by id Request", req.body.delclusterID);
 
-    // console.log("node location: ", unodelocation)
-
-    var sql = "UPDATE node_master SET status = ?  where id_node_master = ?";
-    var params = [unodestatus, unodeID ]
-
+    //var sql = "select id_sensor_master_pk, sensor_type, node_id_fk, sensor_model, sensor_make , status from sensor_master";
+    var sql = "select * from cluster_master where id_cluster_master_pk = " +parseInt(req.body.delclusterID);
     console.log(sql)
     pool.getConnection(function(err,con){
         if(err){
@@ -23,7 +17,7 @@ router.post('/updateNode',function(req,res){
             })
             res.end("Could Not Get Connection Object");
         }else{
-            con.query(sql ,params, function(err,result){
+            con.query(sql,function(err,result){
                 if(err){
                     res.writeHead(400,{
                         'Content-Type' : 'text/plain'
@@ -35,20 +29,18 @@ router.post('/updateNode',function(req,res){
                         res.writeHead(400, {
                             "Content-Type": "text/plain"
                         });
-                        res.end("No Nodes");
+                        res.end("No CLusters");
                     }
                     else{
-                        if(result.affectedRows >= 1){
-                            result += {"status": 200}
-                        }
                         res.writeHead(200,{
                             'Content-Type' : 'text/json'
                         })
-
                         console.log(JSON.stringify(result))
                         res.end(JSON.stringify(result))
                         //res.status(201).json({ status: '201', result: JSON.stringify(result)});
-                        console.log("Successfully updated node data");
+                        console.log("Successfully fetched/searched cluster data : ", result);
+                        console.log("Location : ", result[0].cluster_location);
+                        console.log("Location : ", result[0].status);
                     }
                 }
             });
