@@ -154,7 +154,6 @@ class addNode extends Component {
         let nodeIDJSON = {nodeID: unodeID}
         API.getNode(nodeIDJSON)
             .then((res) => {
-                //console.log("status " +[res]);
                 if (res.length > 0) {
                     console.log(' Success')
                     this.setState({
@@ -470,7 +469,7 @@ class addNode extends Component {
                                                     <hr/>
 
 
-                                        Update Node Location: <input type="text" className="form-control" placeholder="Node Location" defaultValue={this.state.unodelocation}
+                                        Node Location: <input type="text" className="form-control" placeholder="Node Location" defaultValue={this.state.unodelocation}
                                                         onChange={(event) => {
                                                             this.setState({
                                                                 updatenodedata: {
@@ -478,10 +477,18 @@ class addNode extends Component {
                                                                     unodelocation: event.target.value
                                                                 }
                                                             });
-                                                        }}/><br/>
+                                                        }} readonly="readonly"/><br/>
 
 
-
+                                      Current status: <input type="text" className="form-control" placeholder="Node Status" defaultValue={this.state.unodestatus}
+                                                      onChange={(event) => {
+                                                          this.setState({
+                                                              updatenodedata: {
+                                                                  ...this.state.updatenodedata,
+                                                                  unodestatus: event.target.value
+                                                              }
+                                                          });
+                                                      }} readonly="readonly"/><br/>
 
                                       Update Node Status : <select id="ddlNode" className="form-control input-lg" defaultValue={this.state.unodestatus}
                                                                      onChange={(event) => {
